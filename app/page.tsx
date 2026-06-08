@@ -1,65 +1,123 @@
-import Image from "next/image";
+import Link from "next/link";
+import StatsCard from "./_components/StatsCard";
 
-export default function Home() {
+interface DashboardStats {
+  totalTools: number;
+  totalMembers: number;
+  activeLoans: number;
+  underMaintenance: number;
+  pendingReservations: number;
+}
+
+async function getStats(): Promise<DashboardStats> {
+  const res = await fetch("http://localhost:5079/api/dashboard/stats", {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    return { totalTools: 0, totalMembers: 0, activeLoans: 0, underMaintenance: 0, pendingReservations: 0 };
+  }
+  return res.json();
+}
+
+export default async function Home() {
+  const stats = await getStats();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div>
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-bold tracking-tight text-zinc-900">TSQR Platform</h1>
+        <p className="mt-2 text-lg text-zinc-500">
+          Tool Sharing &amp; Quick Reservation — manage tools, members, reservations, and maintenance.
+        </p>
+      </div>
+
+      <div className="mb-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+        <StatsCard label="Total Tools" value={stats.totalTools} icon="🔧" />
+        <StatsCard label="Members" value={stats.totalMembers} icon="👥" />
+        <StatsCard label="Active Loans" value={stats.activeLoans} icon="📦" />
+        <StatsCard label="Under Maintenance" value={stats.underMaintenance} icon="🔨" />
+        <StatsCard label="Pending Reservations" value={stats.pendingReservations} icon="📅" />
+      </div>
+
+      <h2 className="mb-4 text-xl font-semibold text-zinc-800">Modules</h2>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ModuleCard
+          href="/tools"
+          title="Tool Library"
+          description="Browse, search, and manage the full tool catalog. View details, scarcity, and availability."
+          icon="🔧"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        <ModuleCard
+          href="#"
+          title="Members"
+          description="Manage member registrations, memberships, and verification status."
+          icon="👥"
+          locked
+        />
+        <ModuleCard
+          href="#"
+          title="Reservations"
+          description="Handle tool reservations, confirm pickups, and manage waitlists."
+          icon="📅"
+          locked
+        />
+        <ModuleCard
+          href="#"
+          title="Inventory"
+          description="Track tool conditions, loan history, and current holders."
+          icon="📋"
+          locked
+        />
+        <ModuleCard
+          href="#"
+          title="Maintenance"
+          description="Report and track repairs, maintenance history, and condition updates."
+          icon="🔨"
+          locked
+        />
+        <ModuleCard
+          href="#"
+          title="Loans"
+          description="Active and past loans, due dates, fines, and return processing."
+          icon="📦"
+          locked
+        />
+      </div>
     </div>
+  );
+}
+
+function ModuleCard({
+  href,
+  title,
+  description,
+  icon,
+  locked = false,
+}: {
+  href: string;
+  title: string;
+  description: string;
+  icon: string;
+  locked?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`relative rounded-lg border p-5 shadow-sm transition ${
+        locked
+          ? "cursor-not-allowed border-zinc-200 bg-zinc-50 opacity-60"
+          : "border-zinc-200 bg-white hover:shadow-md hover:border-zinc-300"
+      }`}
+      onClick={locked ? (e) => e.preventDefault() : undefined}
+    >
+      {locked && (
+        <span className="absolute right-3 top-3 rounded bg-zinc-200 px-2 py-0.5 text-xs font-medium text-zinc-500">
+          Coming Soon
+        </span>
+      )}
+      <span className="text-2xl">{icon}</span>
+      <h3 className="mt-2 font-semibold text-zinc-900">{title}</h3>
+      <p className="mt-1 text-sm text-zinc-500">{description}</p>
+    </Link>
   );
 }
