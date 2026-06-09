@@ -28,9 +28,11 @@ const scarcityColors: Record<string, string> = {
   Critical: "bg-red-100 text-red-700",
 };
 
+const API_URL = process.env.API_URL ?? "http://localhost:5000";
+
 async function getTool(id: string): Promise<ToolDetail | null> {
   try {
-    const res = await fetch(`http://localhost:5079/api/tools/${id}`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}/api/tools/${id}`, { cache: "no-store" });
     if (!res.ok) return null;
     return res.json();
   } catch {
