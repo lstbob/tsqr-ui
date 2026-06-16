@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { API_URL } from "../../apiConfig";
 
 interface ScarcityEntry {
   locationId: number;
@@ -27,8 +28,6 @@ const scarcityColors: Record<string, string> = {
   High: "bg-orange-100 text-orange-700",
   Critical: "bg-red-100 text-red-700",
 };
-
-const API_URL = process.env.API_URL ?? "http://localhost:5000";
 
 async function getTool(id: string): Promise<ToolDetail | null> {
   try {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import StatsCard from "./_components/StatsCard";
+import { API_URL } from "./apiConfig";
 
 interface DashboardStats {
   totalTools: number;
@@ -8,8 +9,6 @@ interface DashboardStats {
   underMaintenance: number;
   pendingReservations: number;
 }
-
-const API_URL = process.env.API_URL ?? "http://localhost:5000";
 
 async function getStats(): Promise<DashboardStats> {
   const res = await fetch(`${API_URL}/api/dashboard/stats`, {
