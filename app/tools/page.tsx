@@ -53,6 +53,13 @@ function ToolsContent() {
   const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const queryKey = `${q}|${type}|${manufacturerId}|${page}`;
+  const [prevQueryKey, setPrevQueryKey] = useState(queryKey);
+  if (queryKey !== prevQueryKey) {
+    setPrevQueryKey(queryKey);
+    setLoading(true);
+  }
+
   useEffect(() => {
     fetch("/api/manufacturers")
       .then((r) => r.json())
@@ -61,7 +68,6 @@ function ToolsContent() {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (type) params.set("type", type);
