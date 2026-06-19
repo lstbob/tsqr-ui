@@ -27,41 +27,6 @@
         position: relative;
       }
 
-      /* Branches at bottom */
-      .branches {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 250px;
-        z-index: 1;
-        pointer-events: none;
-        opacity: 0.15;
-      }
-
-      .branches svg {
-        width: 100%;
-        height: 100%;
-      }
-
-      .branch {
-        fill: none;
-        stroke: #3a6a2a;
-        stroke-width: 3;
-        stroke-linecap: round;
-        transform-origin: bottom center;
-        animation: sway 5s ease-in-out infinite alternate;
-      }
-
-      .branch:nth-child(2) { animation-delay: 1s; animation-duration: 6s; }
-      .branch:nth-child(3) { animation-delay: 2s; animation-duration: 4.5s; }
-      .branch:nth-child(4) { animation-delay: 0.5s; animation-duration: 7s; }
-
-      @keyframes sway {
-        from { transform: rotate(-2deg); }
-        to { transform: rotate(2deg); }
-      }
-
       /* Floating leaves with wind */
       .leaves {
         position: fixed;
@@ -103,12 +68,8 @@
       }
 
       @keyframes drift {
-        0% {
-          top: 110%;
-        }
-        100% {
-          top: -10%;
-        }
+        0% { top: 110%; }
+        100% { top: -10%; }
       }
 
       @keyframes wind {
@@ -156,42 +117,58 @@
         max-width: 600px;
       }
 
-      .logo {
-        margin-bottom: 2rem;
+      /* Rotating graph */
+      .graph {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 2rem;
         opacity: 0;
         animation: fadeIn 1.2s ease-out 0.3s forwards;
       }
 
-      .logo-circle {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto;
-        border-radius: 50%;
-        border: 2px solid #4a7c3a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: breathe 4s ease-in-out infinite;
+      .graph-rotate {
+        width: 100%;
+        height: 100%;
+        animation: rotate-graph 20s linear infinite;
       }
 
-      .logo-circle svg {
-        width: 44px;
-        height: 44px;
-        fill: none;
+      .graph svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .graph .edge {
         stroke: #4a7c3a;
         stroke-width: 1.5;
-        stroke-linejoin: round;
+        opacity: 0.5;
+        animation: edge-pulse 4s ease-in-out infinite;
       }
 
-      @keyframes breathe {
-        0%, 100% {
-          transform: scale(1);
-          box-shadow: 0 0 0 0 rgba(74, 124, 58, 0.2);
-        }
-        50% {
-          transform: scale(1.05);
-          box-shadow: 0 0 20px 4px rgba(74, 124, 58, 0.15);
-        }
+      .graph .node {
+        fill: #8ab96a;
+        stroke: #4a7c3a;
+        stroke-width: 1;
+      }
+
+      .graph .node-center {
+        fill: #a8d88a;
+        stroke: #6a9e4a;
+        stroke-width: 1.5;
+      }
+
+      @keyframes rotate-graph {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes edge-pulse {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.7; }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .title {
@@ -238,11 +215,6 @@
         50% { border-color: transparent; }
       }
 
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
       .footer {
         margin-top: 3rem;
         font-size: 0.7rem;
@@ -254,18 +226,6 @@
     </style>
   </head>
   <body>
-    <!-- Branches at bottom -->
-    <div class="branches">
-      <svg viewBox="0 0 1920 250" preserveAspectRatio="none">
-        <path class="branch" d="M 200 250 L 200 180 L 160 140 L 140 110" />
-        <path class="branch" d="M 200 250 L 200 180 L 240 140 L 270 100" />
-        <path class="branch" d="M 960 250 L 960 160 L 920 120 L 900 80" />
-        <path class="branch" d="M 960 250 L 960 160 L 1000 120 L 1030 70" />
-        <path class="branch" d="M 1700 250 L 1700 190 L 1660 150 L 1640 110" />
-        <path class="branch" d="M 1700 250 L 1700 190 L 1740 150 L 1770 100" />
-      </svg>
-    </div>
-
     <!-- Floating leaves with wind -->
     <div class="leaves">
       <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
@@ -296,18 +256,41 @@
 
     <!-- Main content -->
     <div class="container">
-      <div class="logo">
-        <div class="logo-circle">
-          <svg viewBox="0 0 24 24">
-            <!-- 16-edge polygon (hexadecagon) -->
-            <polygon points="22,12 21.24,15.83 19.07,19.07 15.83,21.24 12,22 8.17,21.24 4.93,19.07 2.76,15.83 2,12 2.76,8.17 4.93,4.93 8.17,2.76 12,2 15.83,2.76 19.07,4.93 21.24,8.17" />
-            <!-- Inner connecting lines (community) -->
-            <line x1="22" y1="12" x2="2" y2="12" />
-            <line x1="12" y1="2" x2="12" y2="22" />
-            <line x1="19.07" y1="4.93" x2="4.93" y2="19.07" />
-            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
-            <!-- Center node -->
-            <circle cx="12" cy="12" r="1.5" fill="#4a7c3a" stroke="none" />
+      <!-- Rotating graph structure -->
+      <div class="graph">
+        <div class="graph-rotate">
+          <svg viewBox="0 0 100 100">
+            <!-- Edges (connections between nodes) -->
+            <!-- Center to outer nodes -->
+            <line class="edge" x1="50" y1="50" x2="50" y2="10" />
+            <line class="edge" x1="50" y1="50" x2="85" y2="30" />
+            <line class="edge" x1="50" y1="50" x2="90" y2="65" />
+            <line class="edge" x1="50" y1="50" x2="70" y2="90" />
+            <line class="edge" x1="50" y1="50" x2="30" y2="90" />
+            <line class="edge" x1="50" y1="50" x2="10" y2="65" />
+            <line class="edge" x1="50" y1="50" x2="15" y2="30" />
+            <!-- Outer node to outer node (ring connections) -->
+            <line class="edge" x1="50" y1="10" x2="85" y2="30" />
+            <line class="edge" x1="85" y1="30" x2="90" y2="65" />
+            <line class="edge" x1="90" y1="65" x2="70" y2="90" />
+            <line class="edge" x1="70" y1="90" x2="30" y2="90" />
+            <line class="edge" x1="30" y1="90" x2="10" y2="65" />
+            <line class="edge" x1="10" y1="65" x2="15" y2="30" />
+            <line class="edge" x1="15" y1="30" x2="50" y2="10" />
+            <!-- Cross connections (community links) -->
+            <line class="edge" x1="50" y1="10" x2="70" y2="90" />
+            <line class="edge" x1="85" y1="30" x2="30" y2="90" />
+            <line class="edge" x1="90" y1="65" x2="15" y2="30" />
+            <line class="edge" x1="10" y1="65" x2="85" y2="30" />
+            <!-- Nodes -->
+            <circle class="node-center" cx="50" cy="50" r="5" />
+            <circle class="node" cx="50" cy="10" r="3.5" />
+            <circle class="node" cx="85" cy="30" r="3.5" />
+            <circle class="node" cx="90" cy="65" r="3.5" />
+            <circle class="node" cx="70" cy="90" r="3.5" />
+            <circle class="node" cx="30" cy="90" r="3.5" />
+            <circle class="node" cx="10" cy="65" r="3.5" />
+            <circle class="node" cx="15" cy="30" r="3.5" />
           </svg>
         </div>
       </div>
