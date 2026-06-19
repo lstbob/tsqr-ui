@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TownsSquare — Coming Soon</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        height: 100%;
+        font-family: "Consolas", "Courier New", monospace;
+        overflow: hidden;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0d1f0d 0%, #1a2e1a 40%, #0f1f15 100%);
+        color: #e0e8d8;
+        position: relative;
+      }
+
+      /* Floating leaves background */
+      .leaves {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .leaf {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        opacity: 0.12;
+        animation: drift 12s linear infinite;
+      }
+
+      .leaf:nth-child(1) { left: 10%; animation-delay: 0s; }
+      .leaf:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 15s; }
+      .leaf:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 10s; }
+      .leaf:nth-child(4) { left: 55%; animation-delay: 1s; animation-duration: 14s; }
+      .leaf:nth-child(5) { left: 70%; animation-delay: 3s; animation-duration: 11s; }
+      .leaf:nth-child(6) { left: 85%; animation-delay: 5s; animation-duration: 13s; }
+      .leaf:nth-child(7) { left: 60%; animation-delay: 6s; animation-duration: 16s; }
+      .leaf:nth-child(8) { left: 15%; animation-delay: 7s; animation-duration: 12s; }
+
+      .leaf svg {
+        width: 100%;
+        height: 100%;
+        fill: #4a7c3a;
+      }
+
+      @keyframes drift {
+        0% {
+          top: 110%;
+          transform: translateX(0) rotate(0deg);
+        }
+        100% {
+          top: -10%;
+          transform: translateX(60px) rotate(360deg);
+        }
+      }
+
+      /* Connection lines (community/network) */
+      .connections {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.08;
+      }
+
+      .connections svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .connections line {
+        stroke: #5a9e4a;
+        stroke-width: 1;
+        animation: pulse-line 4s ease-in-out infinite;
+      }
+
+      @keyframes pulse-line {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+      }
+
+      /* Main content */
+      .container {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 2rem;
+        max-width: 600px;
+      }
+
+      .logo {
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeIn 1.2s ease-out 0.3s forwards;
+      }
+
+      .logo-circle {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto;
+        border-radius: 50%;
+        border: 2px solid #4a7c3a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: breathe 4s ease-in-out infinite;
+      }
+
+      .logo-circle svg {
+        width: 32px;
+        height: 32px;
+        fill: none;
+        stroke: #4a7c3a;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
+      @keyframes breathe {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(74, 124, 58, 0.2);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 20px 4px rgba(74, 124, 58, 0.15);
+        }
+      }
+
+      .title {
+        font-size: clamp(1.5rem, 5vw, 2.2rem);
+        font-weight: normal;
+        letter-spacing: 0.05em;
+        color: #c8d8b8;
+        opacity: 0;
+        animation: fadeIn 1.2s ease-out 0.6s forwards;
+      }
+
+      .subtitle {
+        margin-top: 0.75rem;
+        font-size: 0.875rem;
+        color: #6a7e5a;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0;
+        animation: fadeIn 1.2s ease-out 0.9s forwards;
+      }
+
+      .coming-soon {
+        margin-top: 2.5rem;
+        font-size: clamp(1.2rem, 4vw, 1.6rem);
+        color: #8ab96a;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 2px solid #8ab96a;
+        width: 0;
+        opacity: 0;
+        animation: fadeIn 0.1s ease-out 1.2s forwards,
+                   type 2s steps(14, end) 1.3s forwards,
+                   blink 0.8s step-end infinite;
+      }
+
+      @keyframes type {
+        from { width: 0; }
+        to { width: 14ch; }
+      }
+
+      @keyframes blink {
+        50% { border-color: transparent; }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .footer {
+        margin-top: 3rem;
+        font-size: 0.7rem;
+        color: #3a5a2a;
+        letter-spacing: 0.05em;
+        opacity: 0;
+        animation: fadeIn 1.2s ease-out 2s forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating leaves -->
+    <div class="leaves">
+      <div class="leaf"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z"/></svg></div>
+      <div class="leaf"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z"/></svg></div>
+      <div class="leaf"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z"/></svg></div>
+      <div class="leaf"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z"/></svg></div>
+      <div class="leaf"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z"/></svg></div>
+      <div class="leaf"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z"/></svg></div>
+      <div class="leaf"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z"/></svg></div>
+      <div class="leaf"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z"/></svg></div>
+    </div>
+
+    <!-- Connection lines (community network) -->
+    <div class="connections">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none">
+        <line x1="200" y1="200" x2="600" y2="400" />
+        <line x1="600" y1="400" x2="1000" y2="300" />
+        <line x1="1000" y1="300" x2="1400" y2="500" />
+        <line x1="1400" y1="500" x2="1700" y2="200" />
+        <line x1="600" y1="400" x2="800" y2="700" />
+        <line x1="800" y1="700" x2="1200" y2="800" />
+        <line x1="1200" y1="800" x2="1400" y2="500" />
+        <line x1="200" y1="200" x2="800" y2="700" />
+      </svg>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+      <div class="logo">
+        <div class="logo-circle">
+          <svg viewBox="0 0 24 24">
+            <!-- Three connected nodes -->
+            <circle cx="12" cy="5" r="2" />
+            <circle cx="6" cy="18" r="2" />
+            <circle cx="18" cy="18" r="2" />
+            <line x1="12" y1="7" x2="7" y2="16" />
+            <line x1="12" y1="7" x2="17" y2="16" />
+            <line x1="8" y1="18" x2="16" y2="18" />
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="title">TownsSquare</h1>
+      <p class="subtitle">Community &middot; Nature &middot; Collaboration</p>
+      <p class="coming-soon">Coming Soon</p>
+      <p class="footer">growing roots, building together</p>
+    </div>
+  </body>
+</html>
