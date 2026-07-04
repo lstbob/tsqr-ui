@@ -5,12 +5,12 @@ import { useEffect, useState, useRef } from "react";
 
 type Profile = {
   id: string;
-  email: string;
-  fullName: string;
-  role: string;
-  memberId: string | null;
+  firstName: string | null;
+  lastName: string | null;
   avatarUrl: string | null;
   bio: string | null;
+  roles: string[];
+  createdOn: string;
 };
 
 export default function ProfilePage() {
@@ -18,9 +18,9 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [bio, setBio] = useState("");
-  const [newEmail, setNewEmail] = useState("");
   const [msg, setMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -32,12 +32,15 @@ export default function ProfilePage() {
       })
       .then((data: Profile) => {
         setProfile(data);
-        setFullName(data.fullName);
+        setFirstName(data.firstName ?? "");
+        setLastName(data.lastName ?? "");
         setBio(data.bio ?? "");
         setLoading(false);
       })
-      .catch(() => router.push("/login"));
-  }, [router]);
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
 
   async function updateProfile(e: React.FormEvent) {
     e.preventDefault();
@@ -47,7 +50,7 @@ export default function ProfilePage() {
       const res = await fetch("/api/proxy/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, bio }),
+        body: JSON.stringify({ firstName, lastName, bio }),
       });
       if (!res.ok) {
         const err = await res.json();
@@ -58,26 +61,6 @@ export default function ProfilePage() {
       setMsg({ type: "error", text: err instanceof Error ? err.message : "Update failed" });
     } finally {
       setSaving(false);
-    }
-  }
-
-  async function requestEmailChange() {
-    if (!newEmail) return;
-    setMsg(null);
-    try {
-      const res = await fetch("/api/proxy/profile/email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newEmail }),
-      });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Request failed");
-      }
-      setMsg({ type: "success", text: "Confirmation email sent. Check your inbox." });
-      setNewEmail("");
-    } catch (err: unknown) {
-      setMsg({ type: "error", text: err instanceof Error ? err.message : "Request failed" });
     }
   }
 
@@ -94,7 +77,6 @@ export default function ProfilePage() {
         throw new Error(err.message || "Upload failed");
       }
       setMsg({ type: "success", text: "Avatar updated." });
-      setProfile((p) => p ? { ...p, avatarUrl: `${p.id}/${file.name}` } : p);
     } catch (err: unknown) {
       setMsg({ type: "error", text: err instanceof Error ? err.message : "Upload failed" });
     }
@@ -108,6 +90,8 @@ export default function ProfilePage() {
     );
   }
 
+  const displayName = [firstName, lastName].filter(Boolean).join(" ") || "User";
+  const initial = (firstName?.charAt(0) || "U").toUpperCase();
   const avatarSrc = profile?.avatarUrl
     ? `/api/proxy/profile/avatar/${profile.id}`
     : null;
@@ -134,9 +118,7 @@ export default function ProfilePage() {
             {avatarSrc ? (
               <img src={avatarSrc} alt="Avatar" className="h-full w-full object-cover" />
             ) : (
-              <span className="text-2xl font-bold text-zinc-500">
-                {fullName.charAt(0).toUpperCase()}
-              </span>
+              <span className="text-2xl font-bold text-zinc-500">{initial}</span>
             )}
           </div>
           <button
@@ -151,24 +133,37 @@ export default function ProfilePage() {
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={uploadAvatar} />
         </div>
         <div>
-          <p className="text-lg font-semibold text-zinc-900">{profile?.fullName}</p>
-          <p className="text-sm text-zinc-500">{profile?.email}</p>
-          <span className="mt-1 inline-block rounded bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600">{profile?.role}</span>
+          <p className="text-lg font-semibold text-zinc-900">{displayName}</p>
+          {profile?.roles && profile.roles.length > 0 && (
+            <span className="mt-1 inline-block rounded bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600">
+              {profile.roles.join(", ")}
+            </span>
+          )}
         </div>
       </div>
 
       <form onSubmit={updateProfile} className="mb-8 space-y-4 rounded-lg border border-zinc-200 bg-white p-6">
         <h2 className="text-lg font-semibold text-zinc-900">Details</h2>
 
-        <div>
-          <label className="block text-sm font-medium text-zinc-700">Full Name</label>
-          <input
-            type="text"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-zinc-700">First Name</label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-700">Last Name</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+            />
+          </div>
         </div>
 
         <div>
@@ -191,27 +186,6 @@ export default function ProfilePage() {
           {saving ? "Saving..." : "Save Changes"}
         </button>
       </form>
-
-      <div className="space-y-4 rounded-lg border border-zinc-200 bg-white p-6">
-        <h2 className="text-lg font-semibold text-zinc-900">Email Address</h2>
-        <p className="text-sm text-zinc-500">Current: {profile?.email}</p>
-        <div className="flex gap-3">
-          <input
-            type="email"
-            value={newEmail}
-            onChange={(e) => setNewEmail(e.target.value)}
-            placeholder="New email address"
-            className="flex-1 rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-          />
-          <button
-            onClick={requestEmailChange}
-            disabled={!newEmail}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
-          >
-            Change Email
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
