@@ -57,6 +57,7 @@ export default function ProfilePage() {
         throw new Error(err.message || "Update failed");
       }
       setMsg({ type: "success", text: "Profile updated." });
+      router.refresh();
     } catch (err: unknown) {
       setMsg({ type: "error", text: err instanceof Error ? err.message : "Update failed" });
     } finally {
