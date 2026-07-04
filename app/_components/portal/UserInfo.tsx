@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -27,6 +28,14 @@ export default function UserInfo({ name, role }: { name: string; role: string })
       </button>
       {open && (
         <div className="absolute right-0 top-full mt-1 w-44 rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
+          <Link
+            href="/portal/profile"
+            onClick={() => setOpen(false)}
+            className="block w-full px-4 py-2 text-left text-sm text-zinc-600 hover:bg-zinc-50"
+          >
+            My Profile
+          </Link>
+          <hr className="my-1 border-zinc-100" />
           <button
             onClick={logout}
             className="w-full px-4 py-2 text-left text-sm text-zinc-600 hover:bg-zinc-50"
