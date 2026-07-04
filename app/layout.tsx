@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import NavBar from "./_components/NavBar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TSQR Platform",
-  description: "Tool Sharing & Quick Reservation Platform",
+  title: "TownsSquare — Community Tool Sharing",
+  description: "A community-powered portal for tool sharing, sustainability, and collaboration.",
 };
 
 export default function RootLayout({
@@ -26,8 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-50`}>
-        <NavBar />
-        <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+        {children}
       </body>
     </html>
   );

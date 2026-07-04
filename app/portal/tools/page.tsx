@@ -2,10 +2,10 @@
 
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import ToolCard from "../_components/ToolCard";
-import SearchBar from "../_components/SearchBar";
-import FilterDropdown from "../_components/FilterDropdown";
-import Pagination from "../_components/Pagination";
+import Link from "next/link";
+import SearchBar from "../../_components/SearchBar";
+import FilterDropdown from "../../_components/FilterDropdown";
+import Pagination from "../../_components/Pagination";
 
 interface ToolItem {
   id: number;
@@ -40,6 +40,14 @@ const toolTypeOptions = [
   { value: "6", label: "Other" },
 ];
 
+const typeColors: Record<string, string> = {
+  "Hand Tool": "bg-blue-100 text-blue-700",
+  "Power Tool": "bg-amber-100 text-amber-700",
+  "Gardening Tool": "bg-green-100 text-green-700",
+  "Construction Tool": "bg-purple-100 text-purple-700",
+  "Specialty Tool": "bg-rose-100 text-rose-700",
+};
+
 function ToolsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -61,7 +69,7 @@ function ToolsContent() {
   }
 
   useEffect(() => {
-    fetch("/api/manufacturers")
+    fetch("/api/proxy/manufacturers")
       .then((r) => r.json())
       .then(setManufacturers)
       .catch(() => {});
@@ -74,7 +82,7 @@ function ToolsContent() {
     if (manufacturerId) params.set("manufacturerId", manufacturerId);
     params.set("page", String(page));
 
-    fetch(`/api/tools?${params.toString()}`)
+    fetch(`/api/proxy/tools?${params.toString()}`)
       .then((r) => r.json())
       .then((d) => { setData(d); setLoading(false); })
       .catch(() => setLoading(false));
@@ -86,25 +94,25 @@ function ToolsContent() {
       if (value) p.set(key, value);
       else p.delete(key);
       if (key !== "page") p.set("page", "1");
-      router.push(`/tools?${p.toString()}`);
+      router.push(`/portal/tools?${p.toString()}`);
     },
     [router, searchParams],
   );
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900">Tool Library</h1>
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-zinc-900">Tool Library</h1>
+        <Link href="/portal/tools/register" className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800">
+          Register Tool
+        </Link>
+      </div>
 
       <div className="mb-6 flex flex-col gap-3 sm:flex-row">
         <div className="flex-1">
           <SearchBar value={q} onChange={(v) => setParam("q", v)} placeholder="Search tools..." />
         </div>
-        <FilterDropdown
-          value={type}
-          onChange={(v) => setParam("type", v)}
-          options={toolTypeOptions}
-          placeholder="All Types"
-        />
+        <FilterDropdown value={type} onChange={(v) => setParam("type", v)} options={toolTypeOptions} placeholder="All Types" />
         <FilterDropdown
           value={manufacturerId}
           onChange={(v) => setParam("manufacturerId", v)}
@@ -119,15 +127,23 @@ function ToolsContent() {
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.items.map((tool) => (
-              <ToolCard
+              <Link
                 key={tool.id}
-                id={tool.id}
-                model={tool.model}
-                description={tool.description}
-                manufacturerName={tool.manufacturerName}
-                toolTypeName={tool.toolTypeName}
-                amortizationRateName={tool.amortizationRateName}
-              />
+                href={`/portal/tools/${tool.id}`}
+                className="block rounded-lg border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:border-zinc-300"
+              >
+                <div className="mb-2 flex items-start justify-between gap-2">
+                  <h3 className="font-semibold text-zinc-900 truncate">{tool.model}</h3>
+                  <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${typeColors[tool.toolTypeName] ?? "bg-zinc-100 text-zinc-700"}`}>
+                    {tool.toolTypeName}
+                  </span>
+                </div>
+                <p className="mb-3 line-clamp-2 text-sm text-zinc-500">{tool.description}</p>
+                <div className="flex items-center justify-between text-xs text-zinc-400">
+                  <span>{tool.manufacturerName}</span>
+                  <span>{tool.amortizationRateName} amortization</span>
+                </div>
+              </Link>
             ))}
           </div>
           <Pagination

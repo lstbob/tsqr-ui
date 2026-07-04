@@ -1,12 +1,6 @@
 import Link from "next/link";
-import { API_URL } from "../../apiConfig";
-
-interface ScarcityEntry {
-  locationId: number;
-  locationName: string;
-  scarcityLevel: number;
-  scarcityLevelName: string;
-}
+import { cookies } from "next/headers";
+import { getGatewayUrl, ACCESS_TOKEN_COOKIE } from "@lib/config";
 
 interface ToolDetail {
   id: number;
@@ -19,7 +13,7 @@ interface ToolDetail {
   amortizationRate: number;
   amortizationRateName: string;
   metadata: string | null;
-  scarcityByLocation: ScarcityEntry[];
+  scarcityByLocation: { locationId: number; locationName: string; scarcityLevel: number; scarcityLevelName: string }[];
 }
 
 const scarcityColors: Record<string, string> = {
@@ -29,9 +23,14 @@ const scarcityColors: Record<string, string> = {
   Critical: "bg-red-100 text-red-700",
 };
 
-async function getTool(id: string): Promise<ToolDetail | null> {
+async function getTool(id: string) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(ACCESS_TOKEN_COOKIE)?.value;
   try {
-    const res = await fetch(`${API_URL}/api/tools/${id}`, { cache: "no-store" });
+    const res = await fetch(`${getGatewayUrl()}/api/tools/${id}`, {
+      cache: "no-store",
+      headers: { Authorization: `Bearer ${token}` },
+    });
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -41,14 +40,13 @@ async function getTool(id: string): Promise<ToolDetail | null> {
 
 export default async function ToolDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const tool = await getTool(id);
+  const tool = await getTool(id) as ToolDetail | null;
 
   if (!tool) {
     return (
       <div className="py-16 text-center">
         <h1 className="text-2xl font-bold text-zinc-900">Tool Not Found</h1>
-        <p className="mt-2 text-zinc-500">The tool you are looking for does not exist.</p>
-        <Link href="/tools" className="mt-4 inline-block text-sm font-medium text-zinc-600 underline hover:text-zinc-900">
+        <Link href="/portal/tools" className="mt-4 inline-block text-sm font-medium text-emerald-700 underline">
           &larr; Back to Tool Library
         </Link>
       </div>
@@ -57,7 +55,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <div>
-      <Link href="/tools" className="mb-6 inline-block text-sm font-medium text-zinc-500 hover:text-zinc-900">
+      <Link href="/portal/tools" className="mb-6 inline-block text-sm font-medium text-zinc-500 hover:text-zinc-900">
         &larr; Back to Tool Library
       </Link>
 
@@ -67,16 +65,25 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ id:
             <h1 className="text-2xl font-bold text-zinc-900">{tool.model}</h1>
             <p className="mt-1 text-zinc-500">{tool.manufacturerName}</p>
           </div>
-          <span className="shrink-0 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
-            {tool.toolTypeName}
-          </span>
+          <div className="flex gap-2">
+            <Link href={`/portal/tools/${tool.id}/edit`} className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50">
+              Edit
+            </Link>
+            <Link href={`/portal/tools/${tool.id}/actions`} className="rounded-lg bg-emerald-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-800">
+              Actions
+            </Link>
+          </div>
         </div>
 
         <p className="mb-6 text-zinc-700">{tool.description}</p>
 
         <div className="mb-6 grid grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-zinc-400">Amortization Rate</span>
+            <span className="text-zinc-400">Type</span>
+            <p className="font-medium text-zinc-800">{tool.toolTypeName}</p>
+          </div>
+          <div>
+            <span className="text-zinc-400">Amortization</span>
             <p className="font-medium text-zinc-800">{tool.amortizationRateName}</p>
           </div>
           {tool.metadata && (
@@ -103,11 +110,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ id:
                     <tr key={s.locationId} className="border-t border-zinc-100">
                       <td className="px-4 py-2 text-zinc-800">{s.locationName}</td>
                       <td className="px-4 py-2">
-                        <span
-                          className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                            scarcityColors[s.scarcityLevelName] ?? "bg-zinc-100 text-zinc-700"
-                          }`}
-                        >
+                        <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${scarcityColors[s.scarcityLevelName] ?? "bg-zinc-100 text-zinc-700"}`}>
                           {s.scarcityLevelName}
                         </span>
                       </td>
