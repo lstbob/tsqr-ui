@@ -29,9 +29,9 @@ async function handler(
   // token and put it in the Authorization header instead.
   headers.delete("cookie");
 
-  const body =
+  const body: BodyInit | undefined =
     request.method !== "GET" && request.method !== "HEAD"
-      ? await request.text()
+      ? await request.arrayBuffer()
       : undefined;
 
   let res = await fetch(url, {

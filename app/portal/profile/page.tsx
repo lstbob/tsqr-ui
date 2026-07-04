@@ -72,10 +72,7 @@ export default function ProfilePage() {
       const form = new FormData();
       form.append("file", file);
       const res = await fetch("/api/proxy/profile/avatar", { method: "POST", body: form });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Upload failed");
-      }
+      if (!res.ok) throw new Error("Upload failed");
       setMsg({ type: "success", text: "Avatar updated." });
     } catch (err: unknown) {
       setMsg({ type: "error", text: err instanceof Error ? err.message : "Upload failed" });
