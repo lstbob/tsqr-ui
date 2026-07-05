@@ -3,9 +3,9 @@
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import SearchBar from "../../_components/SearchBar";
-import FilterDropdown from "../../_components/FilterDropdown";
-import Pagination from "../../_components/Pagination";
+import SearchBar from "../_components/SearchBar";
+import FilterDropdown from "../_components/FilterDropdown";
+import Pagination from "../_components/Pagination";
 
 interface ToolItem {
   id: number;

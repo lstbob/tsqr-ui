@@ -57,6 +57,19 @@ export default async function PortalHome() {
         </>
       )}
 
+      {dashboard?.communitiesStats && (
+        <>
+          <h2 className="mb-3 text-lg font-semibold text-zinc-800">Communities Overview</h2>
+          <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
+            <StatCard label="Total Communities" value={dashboard.communitiesStats.totalCommunities} />
+            <StatCard label="Active" value={dashboard.communitiesStats.active} />
+            <StatCard label="Pending" value={dashboard.communitiesStats.pending} />
+            <StatCard label="Suspended" value={dashboard.communitiesStats.suspended} />
+            <StatCard label="Archived" value={dashboard.communitiesStats.archived} />
+          </div>
+        </>
+      )}
+
       <h2 className="mb-4 text-lg font-semibold text-zinc-800">Quick Access</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <ModuleCard href="/tools" title="Tool Library" description="Browse, search, and manage the tool catalog." icon="🔧" />
@@ -65,6 +78,7 @@ export default async function PortalHome() {
         <ModuleCard href="/portal/loans" title="Loans" description="Track active loans and process returns." icon="📦" />
         <ModuleCard href="/portal/inventory" title="Inventory" description="Monitor tool conditions and maintenance." icon="📋" />
         <ModuleCard href="/soup-kitchen" title="Soup Kitchen" description="Organize community meals and track donations." icon="🍲" />
+        <ModuleCard href="/communities" title="Communities" description="Discover and manage neighbourhood communities." icon="🌍" />
       </div>
     </div>
   );

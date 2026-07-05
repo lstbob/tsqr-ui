@@ -11,6 +11,7 @@ const navItems = [
   { href: "/portal/loans", label: "Loans" },
   { href: "/portal/inventory", label: "Inventory" },
   { href: "/soup-kitchen", label: "Soup Kitchen" },
+  { href: "/communities", label: "Communities" },
 ];
 
 export default function PortalNav({ role }: { role: string }) {
