@@ -94,7 +94,7 @@ function ToolsContent() {
       if (value) p.set(key, value);
       else p.delete(key);
       if (key !== "page") p.set("page", "1");
-      router.push(`/portal/tools?${p.toString()}`);
+      router.push(`/tools?${p.toString()}`);
     },
     [router, searchParams],
   );
@@ -103,7 +103,7 @@ function ToolsContent() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-zinc-900">Tool Library</h1>
-        <Link href="/portal/tools/register" className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800">
+        <Link href="/tools/register" className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800">
           Register Tool
         </Link>
       </div>
@@ -129,7 +129,7 @@ function ToolsContent() {
             {data.items.map((tool) => (
               <Link
                 key={tool.id}
-                href={`/portal/tools/${tool.id}`}
+                href={`/tools/${tool.id}`}
                 className="block rounded-lg border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:border-zinc-300"
               >
                 <div className="mb-2 flex items-start justify-between gap-2">

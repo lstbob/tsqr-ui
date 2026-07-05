@@ -46,7 +46,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ id:
     return (
       <div className="py-16 text-center">
         <h1 className="text-2xl font-bold text-zinc-900">Tool Not Found</h1>
-        <Link href="/portal/tools" className="mt-4 inline-block text-sm font-medium text-emerald-700 underline">
+        <Link href="/tools" className="mt-4 inline-block text-sm font-medium text-emerald-700 underline">
           &larr; Back to Tool Library
         </Link>
       </div>
@@ -55,7 +55,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <div>
-      <Link href="/portal/tools" className="mb-6 inline-block text-sm font-medium text-zinc-500 hover:text-zinc-900">
+      <Link href="/tools" className="mb-6 inline-block text-sm font-medium text-zinc-500 hover:text-zinc-900">
         &larr; Back to Tool Library
       </Link>
 
@@ -66,10 +66,10 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ id:
             <p className="mt-1 text-zinc-500">{tool.manufacturerName}</p>
           </div>
           <div className="flex gap-2">
-            <Link href={`/portal/tools/${tool.id}/edit`} className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50">
+            <Link href={`/tools/${tool.id}/edit`} className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50">
               Edit
             </Link>
-            <Link href={`/portal/tools/${tool.id}/actions`} className="rounded-lg bg-emerald-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-800">
+            <Link href={`/tools/${tool.id}/actions`} className="rounded-lg bg-emerald-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-800">
               Actions
             </Link>
           </div>

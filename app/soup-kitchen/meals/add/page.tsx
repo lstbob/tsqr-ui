@@ -1,20 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function RegisterToolPage() {
+export default function AddMealPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [manufacturers, setManufacturers] = useState<{ id: number; name: string }[]>([]);
+  const [events, setEvents] = useState<{ id: number; name: string }[]>([]);
 
-  if (manufacturers.length === 0) {
-    fetch("/api/proxy/manufacturers")
+  useEffect(() => {
+    fetch("/api/proxy/soup-kitchen/events?pageSize=100")
       .then((r) => r.json())
-      .then(setManufacturers)
+      .then((d) => setEvents(d.items || []))
       .catch(() => {});
-  }
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -24,18 +24,18 @@ export default function RegisterToolPage() {
     const body = Object.fromEntries(fd.entries());
 
     try {
-      const res = await fetch("/api/proxy/tools/register", {
+      const res = await fetch("/api/proxy/soup-kitchen/meals", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       if (!res.ok) {
         const data = await res.json();
-        setError(data.message || "Failed to register tool");
+        setError(data.message || "Failed to add meal");
         setLoading(false);
         return;
       }
-      router.push("/portal/tools");
+      router.push("/soup-kitchen/meals");
       router.refresh();
     } catch {
       setError("Network error");
@@ -45,29 +45,24 @@ export default function RegisterToolPage() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900">Register New Tool</h1>
+      <h1 className="mb-6 text-2xl font-bold text-zinc-900">Add Meal</h1>
       <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
-        <Field label="Model" name="model" required />
-        <Field label="Description" name="description" required textarea />
-        <SelectField label="Manufacturer" name="manufacturerId" options={manufacturers.map((m) => ({ value: String(m.id), label: m.name }))} required />
-        <SelectField label="Tool Type" name="toolType" options={[
-          { value: "1", label: "Hand Tool" }, { value: "2", label: "Power Tool" },
-          { value: "3", label: "Gardening Tool" }, { value: "4", label: "Construction Tool" },
-          { value: "5", label: "Specialty Tool" }, { value: "6", label: "Other" },
+        <SelectField label="Event" name="eventId" options={events.map((e) => ({ value: String(e.id), label: e.name }))} required />
+        <Field label="Meal Name" name="name" required />
+        <Field label="Description" name="description" textarea />
+        <SelectField label="Category" name="category" options={[
+          { value: "1", label: "Soup" },
+          { value: "2", label: "Main Dish" },
+          { value: "3", label: "Side Dish" },
+          { value: "4", label: "Dessert" },
+          { value: "5", label: "Beverage" },
+          { value: "6", label: "Bread" },
         ]} required />
-        <SelectField label="Amortization Rate" name="amortizationRate" options={[
-          { value: "1", label: "Low" }, { value: "2", label: "Medium" }, { value: "3", label: "High" },
-        ]} required />
-        <Field label="Owner ID (member)" name="ownerId" type="number" required />
-        <Field label="Serial Number" name="serialNumber" required />
-        <SelectField label="Initial Condition" name="initialCondition" options={[
-          { value: "1", label: "New" }, { value: "2", label: "Good" }, { value: "3", label: "Fair" },
-          { value: "4", label: "Repaired" }, { value: "5", label: "Poor" },
-        ]} required />
-        <Field label="Metadata (JSON, optional)" name="metadata" />
+        <Field label="Quantity Needed" name="quantityNeeded" type="number" />
+        <Field label="Quantity Prepared" name="quantityPrepared" type="number" />
         {error && <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</p>}
         <button type="submit" disabled={loading} className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800 disabled:opacity-50">
-          {loading ? "Registering..." : "Register Tool"}
+          {loading ? "Adding..." : "Add Meal"}
         </button>
       </form>
     </div>

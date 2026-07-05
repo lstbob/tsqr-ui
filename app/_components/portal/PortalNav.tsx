@@ -5,11 +5,12 @@ import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/portal", label: "Dashboard" },
-  { href: "/portal/tools", label: "Tool Library" },
+  { href: "/tools", label: "Tool Library" },
   { href: "/portal/members", label: "Members" },
   { href: "/portal/reservations", label: "Reservations" },
   { href: "/portal/loans", label: "Loans" },
   { href: "/portal/inventory", label: "Inventory" },
+  { href: "/soup-kitchen", label: "Soup Kitchen" },
 ];
 
 export default function PortalNav({ role }: { role: string }) {

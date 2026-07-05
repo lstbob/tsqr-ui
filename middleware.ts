@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "@lib/config";
+import { ACCESS_TOKEN_COOKIE } from "@lib/config";
 
-// Protect /portal/* routes — redirect to /login if no access token cookie.
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/portal")) {
+  if (pathname.startsWith("/portal") || pathname.startsWith("/tools") || pathname.startsWith("/soup-kitchen")) {
     const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
     if (!accessToken) {
       const loginUrl = new URL("/login", request.url);
@@ -18,5 +17,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/portal/:path*"],
+  matcher: ["/portal/:path*", "/tools/:path*", "/soup-kitchen/:path*"],
 };

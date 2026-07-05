@@ -22,6 +22,7 @@ export default async function PortalHome() {
   const dashboard = await getDashboard();
 
   const stats = dashboard?.stats;
+  const soupKitchenStats = dashboard?.soupKitchenStats;
   const user = dashboard?.user;
 
   return (
@@ -34,7 +35,7 @@ export default async function PortalHome() {
       </div>
 
       {stats && (
-        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+        <div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           <StatCard label="Total Tools" value={stats.totalTools} />
           <StatCard label="Members" value={stats.totalMembers} />
           <StatCard label="Active Loans" value={stats.activeLoans} />
@@ -43,13 +44,27 @@ export default async function PortalHome() {
         </div>
       )}
 
+      {soupKitchenStats && (
+        <>
+          <h2 className="mb-3 text-lg font-semibold text-zinc-800">Soup Kitchen Overview</h2>
+          <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
+            <StatCard label="Total Events" value={soupKitchenStats.totalEvents} />
+            <StatCard label="Upcoming" value={soupKitchenStats.upcomingEvents} />
+            <StatCard label="Volunteers" value={soupKitchenStats.totalVolunteers} />
+            <StatCard label="Donations" value={soupKitchenStats.totalDonations} />
+            <StatCard label="Guests" value={soupKitchenStats.totalGuests} />
+          </div>
+        </>
+      )}
+
       <h2 className="mb-4 text-lg font-semibold text-zinc-800">Quick Access</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <ModuleCard href="/portal/tools" title="Tool Library" description="Browse, search, and manage the tool catalog." icon="🔧" />
+        <ModuleCard href="/tools" title="Tool Library" description="Browse, search, and manage the tool catalog." icon="🔧" />
         <ModuleCard href="/portal/members" title="Members" description="Manage registrations, verification, and membership status." icon="👥" />
         <ModuleCard href="/portal/reservations" title="Reservations" description="View and manage tool reservations and waitlists." icon="📅" />
         <ModuleCard href="/portal/loans" title="Loans" description="Track active loans and process returns." icon="📦" />
         <ModuleCard href="/portal/inventory" title="Inventory" description="Monitor tool conditions and maintenance." icon="📋" />
+        <ModuleCard href="/soup-kitchen" title="Soup Kitchen" description="Organize community meals and track donations." icon="🍲" />
       </div>
     </div>
   );
