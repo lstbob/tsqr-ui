@@ -45,19 +45,19 @@ function ToolActionsContent({ id }: { id: Promise<{ id: string }> }) {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900">Tool Actions — ID {toolId}</h1>
-      {error && <p className="mb-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</p>}
+      <h1 className="mb-6 text-2xl font-bold text-forest-50">Tool Actions — ID {toolId}</h1>
+      {error && <p className="mb-4 rounded-lg bg-red-900/30 px-4 py-2 text-sm text-red-300">{error}</p>}
 
       {inventory.length > 0 && (
-        <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
-          <h2 className="mb-3 font-semibold text-zinc-800">Inventory Items</h2>
+        <div className="mb-6 rounded-lg border border-forest-700 bg-forest-900 p-4 shadow-sm shadow-black/20">
+          <h2 className="mb-3 font-semibold text-forest-100">Inventory Items</h2>
           <div className="space-y-2">
             {inventory.map((item) => (
-              <div key={item.id} className="flex items-center justify-between rounded border border-zinc-100 px-3 py-2">
+              <div key={item.id} className="flex items-center justify-between rounded border border-forest-700 px-3 py-2">
                 <div>
                   <span className="font-mono text-sm">#{item.id} — {item.serialNumber}</span>
-                  <span className="ml-2 rounded bg-zinc-100 px-2 py-0.5 text-xs">{item.statusName}</span>
-                  {item.currentHolderName && <span className="ml-2 text-xs text-zinc-500">held by {item.currentHolderName}</span>}
+                  <span className="ml-2 rounded bg-forest-800 px-2 py-0.5 text-xs">{item.statusName}</span>
+                  {item.currentHolderName && <span className="ml-2 text-xs text-forest-200">held by {item.currentHolderName}</span>}
                 </div>
               </div>
             ))}
@@ -72,9 +72,9 @@ function ToolActionsContent({ id }: { id: Promise<{ id: string }> }) {
             const fd = new FormData(e.currentTarget);
             postAction("tools/loan", { itemId: Number(fd.get("itemId")), memberId: Number(fd.get("memberId")) }, "Loaning tool");
           }} className="flex gap-2">
-            <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <input name="memberId" type="number" placeholder="Member ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <button type="submit" disabled={!!loading} className="rounded bg-amber-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-amber-700 disabled:opacity-50">Loan</button>
+            <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <input name="memberId" type="number" placeholder="Member ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <button type="submit" disabled={!!loading} className="rounded bg-amber-800 px-3 py-1.5 text-sm font-medium text-amber-100 hover:bg-amber-600 disabled:opacity-50">Loan</button>
           </form>
         </ActionCard>
 
@@ -84,12 +84,12 @@ function ToolActionsContent({ id }: { id: Promise<{ id: string }> }) {
             const fd = new FormData(e.currentTarget);
             postAction("tools/return", { itemId: Number(fd.get("itemId")), returnedCondition: Number(fd.get("returnedCondition")) }, "Returning tool");
           }} className="flex gap-2">
-            <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <select name="returnedCondition" className="rounded border border-zinc-300 px-3 py-1.5 text-sm">
+            <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <select name="returnedCondition" className="rounded border border-forest-600 px-3 py-1.5 text-sm">
               <option value="1">New</option><option value="2">Good</option>
               <option value="3">Fair</option><option value="4">Repaired</option><option value="5">Poor</option>
             </select>
-            <button type="submit" disabled={!!loading} className="rounded bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-50">Return</button>
+            <button type="submit" disabled={!!loading} className="rounded bg-green-800 px-3 py-1.5 text-sm font-medium text-green-100 hover:bg-green-600 disabled:opacity-50">Return</button>
           </form>
         </ActionCard>
 
@@ -100,11 +100,11 @@ function ToolActionsContent({ id }: { id: Promise<{ id: string }> }) {
             postAction("tools/mark-for-repair", { itemId: Number(fd.get("itemId")), reportedById: Number(fd.get("reportedById")), description: fd.get("description") }, "Marking for repair");
           }} className="flex flex-col gap-2">
             <div className="flex gap-2">
-              <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-              <input name="reportedById" type="number" placeholder="Reporter ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
+              <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+              <input name="reportedById" type="number" placeholder="Reporter ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
             </div>
-            <textarea name="description" placeholder="Issue description..." rows={2} className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <button type="submit" disabled={!!loading} className="self-start rounded bg-orange-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-orange-700 disabled:opacity-50">Mark for Repair</button>
+            <textarea name="description" placeholder="Issue description..." rows={2} className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <button type="submit" disabled={!!loading} className="self-start rounded bg-orange-800 px-3 py-1.5 text-sm font-medium text-orange-100 hover:bg-orange-600 disabled:opacity-50">Mark for Repair</button>
           </form>
         </ActionCard>
 
@@ -114,14 +114,14 @@ function ToolActionsContent({ id }: { id: Promise<{ id: string }> }) {
             const fd = new FormData(e.currentTarget);
             postAction("tools/complete-repair", { recordId: Number(fd.get("recordId")), itemId: Number(fd.get("itemId")), completedById: Number(fd.get("completedById")), newCondition: Number(fd.get("newCondition")) }, "Completing repair");
           }} className="flex flex-wrap gap-2">
-            <input name="recordId" type="number" placeholder="Record ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <input name="completedById" type="number" placeholder="Repairer ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <select name="newCondition" className="rounded border border-zinc-300 px-3 py-1.5 text-sm">
+            <input name="recordId" type="number" placeholder="Record ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <input name="completedById" type="number" placeholder="Repairer ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <select name="newCondition" className="rounded border border-forest-600 px-3 py-1.5 text-sm">
               <option value="1">New</option><option value="2">Good</option>
               <option value="3">Fair</option><option value="4">Repaired</option><option value="5">Poor</option>
             </select>
-            <button type="submit" disabled={!!loading} className="rounded bg-green-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-800 disabled:opacity-50">Complete Repair</button>
+            <button type="submit" disabled={!!loading} className="rounded bg-green-800 px-3 py-1.5 text-sm font-medium text-green-100 hover:bg-green-600 disabled:opacity-50">Complete Repair</button>
           </form>
         </ActionCard>
 
@@ -131,9 +131,9 @@ function ToolActionsContent({ id }: { id: Promise<{ id: string }> }) {
             const fd = new FormData(e.currentTarget);
             postAction("tools/mark-lost", { itemId: Number(fd.get("itemId")), reporterId: Number(fd.get("reporterId")) }, "Marking lost");
           }} className="flex gap-2">
-            <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <input name="reporterId" type="number" placeholder="Reporter ID" className="rounded border border-zinc-300 px-3 py-1.5 text-sm" />
-            <button type="submit" disabled={!!loading} className="rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50">Mark Lost</button>
+            <input name="itemId" type="number" placeholder="Item ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <input name="reporterId" type="number" placeholder="Reporter ID" className="rounded border border-forest-600 px-3 py-1.5 text-sm" />
+            <button type="submit" disabled={!!loading} className="rounded bg-red-800 px-3 py-1.5 text-sm font-medium text-red-100 hover:bg-red-600 disabled:opacity-50">Mark Lost</button>
           </form>
         </ActionCard>
       </div>
@@ -143,9 +143,9 @@ function ToolActionsContent({ id }: { id: Promise<{ id: string }> }) {
 
 function ActionCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
-      <h3 className="font-semibold text-zinc-900">{title}</h3>
-      <p className="mb-3 text-sm text-zinc-500">{description}</p>
+    <div className="rounded-lg border border-forest-700 bg-forest-900 p-4 shadow-sm shadow-black/20">
+      <h3 className="font-semibold text-forest-50">{title}</h3>
+      <p className="mb-3 text-sm text-forest-200">{description}</p>
       {children}
     </div>
   );

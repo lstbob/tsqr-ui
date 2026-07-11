@@ -38,8 +38,8 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
   if (!event) {
     return (
       <div className="py-16 text-center">
-        <h1 className="text-2xl font-bold text-zinc-900">Event Not Found</h1>
-        <Link href="/soup-kitchen/events" className="mt-4 inline-block text-sm font-medium text-emerald-700 underline">
+        <h1 className="text-2xl font-bold text-forest-50">Event Not Found</h1>
+        <Link href="/soup-kitchen/events" className="mt-4 inline-block text-sm font-medium text-forest-300 underline">
           &larr; Back to Events
         </Link>
       </div>
@@ -48,60 +48,60 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
 
   return (
     <div>
-      <Link href="/soup-kitchen/events" className="mb-6 inline-block text-sm font-medium text-zinc-500 hover:text-zinc-900">
+      <Link href="/soup-kitchen/events" className="mb-6 inline-block text-sm font-medium text-forest-200 hover:text-forest-50">
         &larr; Back to Events
       </Link>
 
-      <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+      <div className="rounded-lg border border-forest-700 bg-forest-900 p-6 shadow-sm shadow-black/20">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-zinc-900">{event.name}</h1>
-            <p className="mt-1 text-zinc-500">{event.location}</p>
+            <h1 className="text-2xl font-bold text-forest-50">{event.name}</h1>
+            <p className="mt-1 text-forest-200">{event.location}</p>
           </div>
           <div className="flex gap-2">
-            <Link href={`/soup-kitchen/events/${event.id}/edit`} className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50">
+            <Link href={`/soup-kitchen/events/${event.id}/edit`} className="rounded-lg border border-forest-600 px-3 py-1.5 text-sm font-medium text-forest-200 hover:bg-forest-800">
               Edit
             </Link>
           </div>
         </div>
 
-        <p className="mb-6 text-zinc-700">{event.description}</p>
+        <p className="mb-6 text-forest-100">{event.description}</p>
 
         <div className="mb-6 grid grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-zinc-400">Date</span>
-            <p className="font-medium text-zinc-800">{event.eventDate ? new Date(event.eventDate).toLocaleString() : "—"}</p>
+            <span className="text-forest-400">Date</span>
+            <p className="font-medium text-forest-100">{event.eventDate ? new Date(event.eventDate).toLocaleString() : "—"}</p>
           </div>
           <div>
-            <span className="text-zinc-400">Status</span>
-            <p className="font-medium text-zinc-800">{event.statusName}</p>
+            <span className="text-forest-400">Status</span>
+            <p className="font-medium text-forest-100">{event.statusName}</p>
           </div>
           <div>
-            <span className="text-zinc-400">Guests</span>
-            <p className="font-medium text-zinc-800">{event.totalGuests} / {event.maxGuests || "∞"}</p>
+            <span className="text-forest-400">Guests</span>
+            <p className="font-medium text-forest-100">{event.totalGuests} / {event.maxGuests || "∞"}</p>
           </div>
           <div>
-            <span className="text-zinc-400">Meals Planned</span>
-            <p className="font-medium text-zinc-800">{event.totalMeals}</p>
+            <span className="text-forest-400">Meals Planned</span>
+            <p className="font-medium text-forest-100">{event.totalMeals}</p>
           </div>
           <div>
-            <span className="text-zinc-400">Volunteers</span>
-            <p className="font-medium text-zinc-800">{event.totalVolunteers}</p>
+            <span className="text-forest-400">Volunteers</span>
+            <p className="font-medium text-forest-100">{event.totalVolunteers}</p>
           </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3">
-          <Link href={`/soup-kitchen/meals?eventId=${event.id}`} className="rounded-lg border border-zinc-200 p-4 text-center hover:shadow-sm">
-            <p className="text-lg font-bold text-zinc-900">{event.totalMeals}</p>
-            <p className="text-sm text-zinc-500">Meals</p>
+          <Link href={`/soup-kitchen/meals?eventId=${event.id}`} className="rounded-lg border border-forest-700 p-4 text-center hover:shadow-sm">
+            <p className="text-lg font-bold text-forest-50">{event.totalMeals}</p>
+            <p className="text-sm text-forest-200">Meals</p>
           </Link>
-          <Link href={`/soup-kitchen/volunteers?eventId=${event.id}`} className="rounded-lg border border-zinc-200 p-4 text-center hover:shadow-sm">
-            <p className="text-lg font-bold text-zinc-900">{event.totalVolunteers}</p>
-            <p className="text-sm text-zinc-500">Volunteers</p>
+          <Link href={`/soup-kitchen/volunteers?eventId=${event.id}`} className="rounded-lg border border-forest-700 p-4 text-center hover:shadow-sm">
+            <p className="text-lg font-bold text-forest-50">{event.totalVolunteers}</p>
+            <p className="text-sm text-forest-200">Volunteers</p>
           </Link>
-          <Link href={`/soup-kitchen/guests?eventId=${event.id}`} className="rounded-lg border border-zinc-200 p-4 text-center hover:shadow-sm">
-            <p className="text-lg font-bold text-zinc-900">{event.totalGuests}</p>
-            <p className="text-sm text-zinc-500">Guests</p>
+          <Link href={`/soup-kitchen/guests?eventId=${event.id}`} className="rounded-lg border border-forest-700 p-4 text-center hover:shadow-sm">
+            <p className="text-lg font-bold text-forest-50">{event.totalGuests}</p>
+            <p className="text-sm text-forest-200">Guests</p>
           </Link>
         </div>
       </div>

@@ -45,8 +45,8 @@ export default function AddMealPage() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900">Add Meal</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+      <h1 className="mb-6 text-2xl font-bold text-forest-50">Add Meal</h1>
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-forest-700 bg-forest-900 p-6 shadow-sm shadow-black/20">
         <SelectField label="Event" name="eventId" options={events.map((e) => ({ value: String(e.id), label: e.name }))} required />
         <Field label="Meal Name" name="name" required />
         <Field label="Description" name="description" textarea />
@@ -60,8 +60,8 @@ export default function AddMealPage() {
         ]} required />
         <Field label="Quantity Needed" name="quantityNeeded" type="number" />
         <Field label="Quantity Prepared" name="quantityPrepared" type="number" />
-        {error && <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</p>}
-        <button type="submit" disabled={loading} className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800 disabled:opacity-50">
+        {error && <p className="rounded-lg bg-red-900/30 px-4 py-2 text-sm text-red-300">{error}</p>}
+        <button type="submit" disabled={loading} className="rounded-lg bg-forest-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-forest-400 disabled:opacity-50">
           {loading ? "Adding..." : "Add Meal"}
         </button>
       </form>
@@ -72,11 +72,11 @@ export default function AddMealPage() {
 function Field({ label, name, type = "text", required, textarea }: { label: string; name: string; type?: string; required?: boolean; textarea?: boolean }) {
   return (
     <div>
-      <label className="mb-1 block text-sm font-medium text-zinc-700">{label}{required && " *"}</label>
+      <label className="mb-1 block text-sm font-medium text-forest-100">{label}{required && " *"}</label>
       {textarea ? (
-        <textarea name={name} required={required} rows={3} className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500" />
+        <textarea name={name} required={required} rows={3} className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400" />
       ) : (
-        <input type={type} name={name} required={required} className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500" />
+        <input type={type} name={name} required={required} className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400" />
       )}
     </div>
   );
@@ -85,8 +85,8 @@ function Field({ label, name, type = "text", required, textarea }: { label: stri
 function SelectField({ label, name, options, required }: { label: string; name: string; options: { value: string; label: string }[]; required?: boolean }) {
   return (
     <div>
-      <label className="mb-1 block text-sm font-medium text-zinc-700">{label}{required && " *"}</label>
-      <select name={name} required={required} className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500">
+      <label className="mb-1 block text-sm font-medium text-forest-100">{label}{required && " *"}</label>
+      <select name={name} required={required} className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400">
         {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>

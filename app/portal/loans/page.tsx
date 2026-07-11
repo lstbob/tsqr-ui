@@ -17,13 +17,13 @@ export default function LoansPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900">Active Loans</h1>
+      <h1 className="mb-6 text-2xl font-bold text-forest-50">Active Loans</h1>
       {loading ? (
-        <p className="py-12 text-center text-zinc-400">Loading...</p>
+        <p className="py-12 text-center text-forest-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
-        <div className="overflow-hidden rounded-lg border border-zinc-200">
+        <div className="overflow-hidden rounded-lg border border-forest-700">
           <table className="w-full text-sm">
-            <thead className="bg-zinc-50 text-left text-zinc-500">
+            <thead className="text-left text-forest-200">
               <tr>
                 <th className="px-4 py-2 font-medium">Item ID</th>
                 <th className="px-4 py-2 font-medium">Tool</th>
@@ -36,21 +36,21 @@ export default function LoansPage() {
             </thead>
             <tbody>
               {data.items.map((l) => (
-                <tr key={l.id} className="border-t border-zinc-100 hover:bg-zinc-50">
-                  <td className="px-4 py-2 text-zinc-400">{l.id}</td>
-                  <td className="px-4 py-2 font-medium text-zinc-900">{l.toolModel}</td>
-                  <td className="px-4 py-2 text-zinc-600">{l.serialNumber}</td>
-                  <td className="px-4 py-2 text-zinc-600">{l.currentHolderName || "—"}</td>
-                  <td className="px-4 py-2 text-zinc-600">{l.lastBorrowedDate ? new Date(l.lastBorrowedDate).toLocaleDateString() : "—"}</td>
-                  <td className="px-4 py-2 text-zinc-600">{l.loanCount}</td>
-                  <td className="px-4 py-2"><Link href={`/portal/loans/${l.id}`} className="text-emerald-700 hover:underline">View</Link></td>
+                <tr key={l.id} className="border-t border-forest-700 hover:bg-forest-800">
+                  <td className="px-4 py-2 text-forest-400">{l.id}</td>
+                  <td className="px-4 py-2 font-medium text-forest-50">{l.toolModel}</td>
+                  <td className="px-4 py-2 text-forest-200">{l.serialNumber}</td>
+                  <td className="px-4 py-2 text-forest-200">{l.currentHolderName || "—"}</td>
+                  <td className="px-4 py-2 text-forest-200">{l.lastBorrowedDate ? new Date(l.lastBorrowedDate).toLocaleDateString() : "—"}</td>
+                  <td className="px-4 py-2 text-forest-200">{l.loanCount}</td>
+                  <td className="px-4 py-2"><Link href={`/portal/loans/${l.id}`} className="text-forest-300 hover:underline">View</Link></td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <p className="py-12 text-center text-zinc-400">No active loans.</p>
+        <p className="py-12 text-center text-forest-400">No active loans.</p>
       )}
     </div>
   );

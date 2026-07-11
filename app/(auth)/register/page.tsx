@@ -50,34 +50,34 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-8 shadow-sm">
-      <h1 className="text-2xl font-bold text-zinc-900">Create Account</h1>
-      <p className="mt-1 text-sm text-zinc-500">Join the TownsSquare community</p>
+    <div className="rounded-xl border border-forest-700 bg-forest-900 p-8 shadow-sm shadow-black/20">
+      <h1 className="text-2xl font-bold text-forest-50">Create Account</h1>
+      <p className="mt-1 text-sm text-forest-200">Join the TownsSquare community</p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-zinc-700">Full Name</label>
+          <label className="mb-1 block text-sm font-medium text-forest-100">Full Name</label>
           <input
             type="text"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             required
-            className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            className="w-full rounded-lg border border-forest-600 bg-forest-950 px-4 py-2 text-sm text-forest-50 outline-none placeholder:text-forest-600 focus:border-forest-400 focus:ring-1 focus:ring-forest-400"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-zinc-700">Email</label>
+          <label className="mb-1 block text-sm font-medium text-forest-100">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            className="w-full rounded-lg border border-forest-600 bg-forest-950 px-4 py-2 text-sm text-forest-50 outline-none placeholder:text-forest-600 focus:border-forest-400 focus:ring-1 focus:ring-forest-400"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-zinc-700">Password</label>
+          <label className="mb-1 block text-sm font-medium text-forest-100">Password</label>
           <input
             type="password"
             value={password}
@@ -85,25 +85,25 @@ export default function RegisterPage() {
             required
             minLength={6}
             autoComplete="new-password"
-            className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            className="w-full rounded-lg border border-forest-600 bg-forest-950 px-4 py-2 text-sm text-forest-50 outline-none placeholder:text-forest-600 focus:border-forest-400 focus:ring-1 focus:ring-forest-400"
           />
-          <p className="mt-1 text-xs text-zinc-400">Minimum 6 characters</p>
+          <p className="mt-1 text-xs text-forest-500">Minimum 6 characters</p>
         </div>
         {error && (
-          <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</p>
+          <p className="rounded-lg bg-red-900/30 px-4 py-2 text-sm text-red-300">{error}</p>
         )}
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 disabled:opacity-50"
+          className="w-full rounded-lg bg-forest-500 px-4 py-2.5 text-sm font-semibold text-forest-950 shadow-sm shadow-black/20 transition hover:bg-forest-400 disabled:opacity-50"
         >
           {loading ? "Creating account..." : "Create Account"}
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-zinc-500">
+      <p className="mt-6 text-center text-sm text-forest-200">
         Already have an account?{" "}
-        <a href="/login" className="font-medium text-emerald-700 hover:underline">Sign in</a>
+        <a href="/login" className="font-medium text-forest-300 hover:underline">Sign in</a>
       </p>
     </div>
   );

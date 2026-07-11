@@ -41,22 +41,22 @@ export default function NewReservationPage() {
 
   return (
     <div className="max-w-xl">
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900">New Reservation</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+      <h1 className="mb-6 text-2xl font-bold text-forest-50">New Reservation</h1>
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-forest-700 bg-forest-900 p-6 shadow-sm shadow-black/20">
         <div>
-          <label className="mb-1 block text-sm font-medium text-zinc-700">Item ID *</label>
-          <input type="number" name="itemId" required className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500" />
+          <label className="mb-1 block text-sm font-medium text-forest-100">Item ID *</label>
+          <input type="number" name="itemId" required className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400" />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-zinc-700">Member ID *</label>
-          <input type="number" name="memberId" required className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500" />
+          <label className="mb-1 block text-sm font-medium text-forest-100">Member ID *</label>
+          <input type="number" name="memberId" required className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400" />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-zinc-700">Reservation Date *</label>
-          <input type="date" name="reservationDate" required className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500" />
+          <label className="mb-1 block text-sm font-medium text-forest-100">Reservation Date *</label>
+          <input type="date" name="reservationDate" required className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400" />
         </div>
-        {error && <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</p>}
-        <button type="submit" disabled={loading} className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800 disabled:opacity-50">
+        {error && <p className="rounded-lg bg-red-900/30 px-4 py-2 text-sm text-red-300">{error}</p>}
+        <button type="submit" disabled={loading} className="rounded-lg bg-forest-500 px-6 py-2.5 text-sm font-semibold text-forest-950 hover:bg-forest-400 disabled:opacity-50">
           {loading ? "Creating..." : "Create Reservation"}
         </button>
       </form>

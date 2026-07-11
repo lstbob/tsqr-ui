@@ -30,25 +30,25 @@ export default function DonationsPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-zinc-900">Donations</h1>
-        <Link href="/soup-kitchen/donations/record" className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800">
+        <h1 className="text-2xl font-bold text-forest-50">Donations</h1>
+        <Link href="/soup-kitchen/donations/record" className="rounded-lg bg-forest-500 px-4 py-2 text-sm font-semibold text-white hover:bg-forest-400">
           Record Donation
         </Link>
       </div>
 
       <div className="mb-4">
-        <select value={eventId} onChange={(e) => setEventId(e.target.value)} className="rounded-lg border border-zinc-300 px-3 py-2 text-sm">
+        <select value={eventId} onChange={(e) => setEventId(e.target.value)} className="rounded-lg border border-forest-600 px-3 py-2 text-sm">
           <option value="">All Events</option>
           {events.map((e) => <option key={e.id} value={String(e.id)}>{e.name}</option>)}
         </select>
       </div>
 
       {loading ? (
-        <p className="py-12 text-center text-zinc-400">Loading...</p>
+        <p className="py-12 text-center text-forest-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
-        <div className="overflow-hidden rounded-lg border border-zinc-200">
+        <div className="overflow-hidden rounded-lg border border-forest-700">
           <table className="w-full text-sm">
-            <thead className="bg-zinc-50 text-left text-zinc-500">
+            <thead className="text-left text-forest-200">
               <tr>
                 <th className="px-4 py-2 font-medium">Donor</th>
                 <th className="px-4 py-2 font-medium">Item</th>
@@ -59,19 +59,19 @@ export default function DonationsPage() {
             </thead>
             <tbody>
               {data.items.map((d: any) => (
-                <tr key={d.id} className="border-t border-zinc-100 hover:bg-zinc-50">
-                  <td className="px-4 py-2 font-medium text-zinc-900">{d.donorName}</td>
-                  <td className="px-4 py-2 text-zinc-600">{d.item}</td>
-                  <td className="px-4 py-2 text-zinc-600">{d.quantity}</td>
-                  <td className="px-4 py-2 text-zinc-600">{d.eventName}</td>
-                  <td className="px-4 py-2 text-zinc-600">{d.donationDate ? new Date(d.donationDate).toLocaleDateString() : "—"}</td>
+                <tr key={d.id} className="border-t border-forest-700 hover:bg-forest-800">
+                  <td className="px-4 py-2 font-medium text-forest-50">{d.donorName}</td>
+                  <td className="px-4 py-2 text-forest-200">{d.item}</td>
+                  <td className="px-4 py-2 text-forest-200">{d.quantity}</td>
+                  <td className="px-4 py-2 text-forest-200">{d.eventName}</td>
+                  <td className="px-4 py-2 text-forest-200">{d.donationDate ? new Date(d.donationDate).toLocaleDateString() : "—"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <p className="py-12 text-center text-zinc-400">No donations found.</p>
+        <p className="py-12 text-center text-forest-400">No donations found.</p>
       )}
     </div>
   );

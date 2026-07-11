@@ -27,8 +27,8 @@ export default function PortalNav({ role }: { role: string }) {
             href={item.href}
             className={`rounded-md px-3 py-1.5 text-sm font-medium transition ${
               isActive
-                ? "bg-emerald-100 text-emerald-800"
-                : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100"
+                ? "bg-forest-800 text-forest-100"
+                : "text-forest-200 hover:text-forest-50 hover:bg-forest-800"
             }`}
           >
             {item.label}

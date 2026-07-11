@@ -83,7 +83,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-600 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-forest-500 border-t-transparent" />
       </div>
     );
   }
@@ -96,14 +96,14 @@ export default function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="mb-8 text-2xl font-bold text-zinc-900">My Profile</h1>
+      <h1 className="mb-8 text-2xl font-bold text-forest-50">My Profile</h1>
 
       {msg && (
         <div
           className={`mb-6 rounded-lg border px-4 py-3 text-sm ${
             msg.type === "success"
-              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-              : "border-red-200 bg-red-50 text-red-800"
+              ? "border-forest-700 bg-forest-800 text-forest-100"
+              : "border-red-900/30 bg-red-900/30 text-red-300"
           }`}
         >
           {msg.text}
@@ -112,16 +112,16 @@ export default function ProfilePage() {
 
       <div className="mb-8 flex items-center gap-6">
         <div className="relative">
-          <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-zinc-200">
+          <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-forest-800">
             {avatarSrc ? (
               <img src={avatarSrc} alt="Avatar" className="h-full w-full object-cover" />
             ) : (
-              <span className="text-2xl font-bold text-zinc-500">{initial}</span>
+              <span className="text-2xl font-bold text-forest-200">{initial}</span>
             )}
           </div>
           <button
             onClick={() => fileRef.current?.click()}
-            className="absolute -bottom-1 -right-1 rounded-full bg-emerald-600 p-1.5 text-white shadow hover:bg-emerald-700"
+            className="absolute -bottom-1 -right-1 rounded-full bg-forest-500 p-1.5 text-forest-950 shadow shadow-black/20 hover:bg-forest-400"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -131,55 +131,55 @@ export default function ProfilePage() {
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={uploadAvatar} />
         </div>
         <div>
-          <p className="text-lg font-semibold text-zinc-900">{displayName}</p>
+          <p className="text-lg font-semibold text-forest-50">{displayName}</p>
           {profile?.roles && profile.roles.length > 0 && (
-            <span className="mt-1 inline-block rounded bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600">
+            <span className="mt-1 inline-block rounded bg-forest-800 px-2 py-0.5 text-xs text-forest-200">
               {profile.roles.join(", ")}
             </span>
           )}
         </div>
       </div>
 
-      <form onSubmit={updateProfile} className="mb-8 space-y-4 rounded-lg border border-zinc-200 bg-white p-6">
-        <h2 className="text-lg font-semibold text-zinc-900">Details</h2>
+      <form onSubmit={updateProfile} className="mb-8 space-y-4 rounded-lg border border-forest-700 bg-forest-900 p-6">
+        <h2 className="text-lg font-semibold text-forest-50">Details</h2>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-zinc-700">First Name</label>
+            <label className="block text-sm font-medium text-forest-100">First Name</label>
             <input
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="mt-1 w-full rounded-lg border border-forest-600 px-3 py-2 text-sm focus:border-forest-400 focus:outline-none focus:ring-1 focus:ring-forest-400"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-zinc-700">Last Name</label>
+            <label className="block text-sm font-medium text-forest-100">Last Name</label>
             <input
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="mt-1 w-full rounded-lg border border-forest-600 px-3 py-2 text-sm focus:border-forest-400 focus:outline-none focus:ring-1 focus:ring-forest-400"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-zinc-700">Bio</label>
+          <label className="block text-sm font-medium text-forest-100">Bio</label>
           <textarea
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             rows={3}
             maxLength={500}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+            className="mt-1 w-full rounded-lg border border-forest-600 px-3 py-2 text-sm focus:border-forest-400 focus:outline-none focus:ring-1 focus:ring-forest-400"
           />
-          <p className="mt-1 text-xs text-zinc-400">{bio.length}/500</p>
+          <p className="mt-1 text-xs text-forest-400">{bio.length}/500</p>
         </div>
 
         <button
           type="submit"
           disabled={saving}
-          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+          className="rounded-lg bg-forest-500 px-4 py-2 text-sm font-medium text-forest-950 hover:bg-forest-400 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

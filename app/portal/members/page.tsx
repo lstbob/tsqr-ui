@@ -32,8 +32,8 @@ export default function MembersPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-zinc-900">Members</h1>
-        <Link href="/portal/members/register" className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800">
+        <h1 className="text-2xl font-bold text-forest-50">Members</h1>
+        <Link href="/portal/members/register" className="rounded-lg bg-forest-500 px-4 py-2 text-sm font-semibold text-forest-950 hover:bg-forest-400">
           Register Member
         </Link>
       </div>
@@ -44,19 +44,19 @@ export default function MembersPage() {
           placeholder="Search by name or email..."
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-          className="flex-1 rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none focus:border-emerald-500"
+          className="flex-1 rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400"
         />
-        <select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }} className="rounded-lg border border-zinc-300 px-3 py-2 text-sm">
+        <select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }} className="rounded-lg border border-forest-600 px-3 py-2 text-sm">
           {memberStatusOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
       </div>
 
       {loading ? (
-        <p className="py-12 text-center text-zinc-400">Loading...</p>
+        <p className="py-12 text-center text-forest-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
-        <div className="overflow-hidden rounded-lg border border-zinc-200">
+        <div className="overflow-hidden rounded-lg border border-forest-700">
           <table className="w-full text-sm">
-            <thead className="bg-zinc-50 text-left text-zinc-500">
+            <thead className="text-left text-forest-200">
               <tr>
                 <th className="px-4 py-2 font-medium">ID</th>
                 <th className="px-4 py-2 font-medium">Name</th>
@@ -69,21 +69,21 @@ export default function MembersPage() {
             </thead>
             <tbody>
               {data.items.map((m) => (
-                <tr key={m.id} className="border-t border-zinc-100 hover:bg-zinc-50">
-                  <td className="px-4 py-2 text-zinc-400">{m.id}</td>
-                  <td className="px-4 py-2 font-medium text-zinc-900">{m.fullName}</td>
-                  <td className="px-4 py-2 text-zinc-600">{m.email}</td>
+                <tr key={m.id} className="border-t border-forest-700 hover:bg-forest-800">
+                  <td className="px-4 py-2 text-forest-400">{m.id}</td>
+                  <td className="px-4 py-2 font-medium text-forest-50">{m.fullName}</td>
+                  <td className="px-4 py-2 text-forest-200">{m.email}</td>
                   <td className="px-4 py-2">
                     <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                      m.statusName === "Active" ? "bg-green-100 text-green-700" :
-                      m.statusName === "Suspended" ? "bg-yellow-100 text-yellow-700" :
-                      "bg-red-100 text-red-700"
+                      m.statusName === "Active" ? "bg-green-900/40 text-green-300" :
+                      m.statusName === "Suspended" ? "bg-yellow-900/40 text-yellow-300" :
+                      "bg-red-900/40 text-red-300"
                     }`}>{m.statusName}</span>
                   </td>
-                  <td className="px-4 py-2 text-zinc-600">{m.membershipTypeName || "—"}</td>
+                  <td className="px-4 py-2 text-forest-200">{m.membershipTypeName || "—"}</td>
                   <td className="px-4 py-2">{m.isVerified ? "✓" : "—"}</td>
                   <td className="px-4 py-2">
-                    <Link href={`/portal/members/${m.id}`} className="text-emerald-700 hover:underline">View</Link>
+                    <Link href={`/portal/members/${m.id}`} className="text-forest-300 hover:underline">View</Link>
                   </td>
                 </tr>
               ))}
@@ -91,7 +91,7 @@ export default function MembersPage() {
           </table>
         </div>
       ) : (
-        <p className="py-12 text-center text-zinc-400">No members found.</p>
+        <p className="py-12 text-center text-forest-400">No members found.</p>
       )}
     </div>
   );

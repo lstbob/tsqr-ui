@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getGatewayUrl, ACCESS_TOKEN_COOKIE, SUPPORT_URL } from "@lib/config";
 import PortalNav from "../_components/portal/PortalNav";
 import UserInfo from "../_components/portal/UserInfo";
+import { ConnectionLines } from "../_components/decorations";
 
 async function getCurrentUser() {
   const cookieStore = await cookies();
@@ -25,11 +26,12 @@ export default async function PortalLayout({ children }: { children: React.React
   if (!user) redirect("/login");
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white">
+    <div className="min-h-screen bg-forest-950">
+      <ConnectionLines />
+      <header className="sticky top-0 z-50 border-b border-forest-800 bg-forest-900/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           <div className="flex items-center gap-8">
-            <a href="/portal" className="text-xl font-bold tracking-tight text-emerald-900">
+            <a href="/portal" className="text-xl font-bold tracking-tight text-forest-50">
               TownsSquare
             </a>
             <PortalNav role={user.role} />
@@ -39,7 +41,7 @@ export default async function PortalLayout({ children }: { children: React.React
               href={SUPPORT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-zinc-500 hover:text-zinc-900"
+              className="text-sm font-medium text-forest-200 hover:text-forest-50"
             >
               Support
             </a>
@@ -47,7 +49,7 @@ export default async function PortalLayout({ children }: { children: React.React
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-7xl px-4 py-8">{children}</main>
+      <main className="relative z-10 mx-auto max-w-7xl px-4 py-8">{children}</main>
     </div>
   );
 }

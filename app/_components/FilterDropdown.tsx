@@ -22,11 +22,11 @@ export default function FilterDropdown({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="rounded-lg border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500"
+      className="rounded-lg border border-forest-600 bg-forest-950 px-3 py-2 text-sm text-forest-50 outline-none focus:border-forest-400 focus:ring-1 focus:ring-forest-400"
     >
-      <option value="">{placeholder}</option>
+      <option value="" className="bg-forest-900">{placeholder}</option>
       {options.map((opt) => (
-        <option key={opt.value} value={opt.value}>
+        <option key={opt.value} value={opt.value} className="bg-forest-900">
           {opt.label}
         </option>
       ))}

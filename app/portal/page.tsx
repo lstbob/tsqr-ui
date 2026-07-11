@@ -28,10 +28,10 @@ export default async function PortalHome() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-900">
+        <h1 className="text-2xl font-bold text-forest-50">
           Welcome back, {user?.fullName?.split(" ")[0] || "there"}!
         </h1>
-        <p className="mt-1 text-zinc-500">Manage your community tool library from here.</p>
+        <p className="mt-1 text-forest-200">Manage your community tool library from here.</p>
       </div>
 
       {stats && (
@@ -46,7 +46,7 @@ export default async function PortalHome() {
 
       {soupKitchenStats && (
         <>
-          <h2 className="mb-3 text-lg font-semibold text-zinc-800">Soup Kitchen Overview</h2>
+          <h2 className="mb-3 text-lg font-semibold text-forest-100">Soup Kitchen Overview</h2>
           <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
             <StatCard label="Total Events" value={soupKitchenStats.totalEvents} />
             <StatCard label="Upcoming" value={soupKitchenStats.upcomingEvents} />
@@ -59,7 +59,7 @@ export default async function PortalHome() {
 
       {dashboard?.communitiesStats && (
         <>
-          <h2 className="mb-3 text-lg font-semibold text-zinc-800">Communities Overview</h2>
+          <h2 className="mb-3 text-lg font-semibold text-forest-100">Communities Overview</h2>
           <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
             <StatCard label="Total Communities" value={dashboard.communitiesStats.totalCommunities} />
             <StatCard label="Active" value={dashboard.communitiesStats.active} />
@@ -70,7 +70,7 @@ export default async function PortalHome() {
         </>
       )}
 
-      <h2 className="mb-4 text-lg font-semibold text-zinc-800">Quick Access</h2>
+      <h2 className="mb-4 text-lg font-semibold text-forest-100">Quick Access</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <ModuleCard href="/tools" title="Tool Library" description="Browse, search, and manage the tool catalog." icon="🔧" />
         <ModuleCard href="/portal/members" title="Members" description="Manage registrations, verification, and membership status." icon="👥" />
@@ -86,19 +86,19 @@ export default async function PortalHome() {
 
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
-      <p className="text-2xl font-bold text-zinc-900">{value}</p>
-      <p className="text-sm text-zinc-500">{label}</p>
+    <div className="rounded-lg border border-forest-700 bg-forest-900 p-5 shadow-sm shadow-black/20">
+      <p className="text-2xl font-bold text-forest-50">{value}</p>
+      <p className="text-sm text-forest-400">{label}</p>
     </div>
   );
 }
 
 function ModuleCard({ href, title, description, icon }: { href: string; title: string; description: string; icon: string }) {
   return (
-    <Link href={href} className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:border-zinc-300">
+    <Link href={href} className="rounded-lg border border-forest-700 bg-forest-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-forest-500">
       <span className="text-2xl">{icon}</span>
-      <h3 className="mt-2 font-semibold text-zinc-900">{title}</h3>
-      <p className="mt-1 text-sm text-zinc-500">{description}</p>
+      <h3 className="mt-2 font-semibold text-forest-50">{title}</h3>
+      <p className="mt-1 text-sm text-forest-200">{description}</p>
     </Link>
   );
 }

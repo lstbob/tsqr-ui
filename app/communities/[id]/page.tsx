@@ -35,15 +35,15 @@ async function getCommunity(id: string) {
 function statusBadgeClass(statusName: string) {
   switch (statusName) {
     case "PendingConfirmation":
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-yellow-900/40 text-yellow-300";
     case "Active":
-      return "bg-green-100 text-green-700";
+      return "bg-green-900/40 text-green-300";
     case "Suspended":
-      return "bg-red-100 text-red-700";
+      return "bg-red-900/40 text-red-300";
     case "Archived":
-      return "bg-gray-100 text-gray-700";
+      return "bg-gray-800 text-gray-300";
     default:
-      return "bg-zinc-100 text-zinc-700";
+      return "bg-forest-800 text-forest-100";
   }
 }
 
@@ -54,8 +54,8 @@ export default async function CommunityDetailPage({ params }: { params: Promise<
   if (!community) {
     return (
       <div className="py-16 text-center">
-        <h1 className="text-2xl font-bold text-zinc-900">Community Not Found</h1>
-        <Link href="/communities/browse" className="mt-4 inline-block text-sm font-medium text-emerald-700 underline">
+        <h1 className="text-2xl font-bold text-forest-50">Community Not Found</h1>
+        <Link href="/communities/browse" className="mt-4 inline-block text-sm font-medium text-forest-300 underline">
           &larr; Back to Browse
         </Link>
       </div>
@@ -64,34 +64,34 @@ export default async function CommunityDetailPage({ params }: { params: Promise<
 
   return (
     <div>
-      <Link href="/communities/browse" className="mb-6 inline-block text-sm font-medium text-zinc-500 hover:text-zinc-900">
+      <Link href="/communities/browse" className="mb-6 inline-block text-sm font-medium text-forest-200 hover:text-forest-50">
         &larr; Back to Browse
       </Link>
 
-      <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+      <div className="rounded-lg border border-forest-700 bg-forest-900 p-6 shadow-sm shadow-black/20">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-zinc-900">{community.name}</h1>
-            <p className="mt-1 text-zinc-500">
-              <span className="font-medium text-zinc-700">{community.country}</span>
+            <h1 className="text-2xl font-bold text-forest-50">{community.name}</h1>
+            <p className="mt-1 text-forest-200">
+              <span className="font-medium text-forest-100">{community.country}</span>
               {" → "}
-              <span className="font-medium text-zinc-700">{community.city}</span>
+              <span className="font-medium text-forest-100">{community.city}</span>
               {" → "}
-              <span className="font-medium text-zinc-700">{community.neighbourhood}</span>
+              <span className="font-medium text-forest-100">{community.neighbourhood}</span>
             </p>
           </div>
           <div className="flex gap-2">
-            <Link href={`/communities/${community.id}/edit`} className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50">
+            <Link href={`/communities/${community.id}/edit`} className="rounded-lg border border-forest-600 px-3 py-1.5 text-sm font-medium text-forest-200 hover:bg-forest-800">
               Edit
             </Link>
           </div>
         </div>
 
-        <p className="mb-6 text-zinc-700">{community.description}</p>
+        <p className="mb-6 text-forest-100">{community.description}</p>
 
         <div className="mb-6 grid grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-zinc-400">Status</span>
+            <span className="text-forest-400">Status</span>
             <p className="mt-0.5">
               <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusBadgeClass(community.statusName)}`}>
                 {community.statusName}
@@ -99,16 +99,16 @@ export default async function CommunityDetailPage({ params }: { params: Promise<
             </p>
           </div>
           <div>
-            <span className="text-zinc-400">Contact Email</span>
-            <p className="font-medium text-zinc-800">{community.contactEmail || "—"}</p>
+            <span className="text-forest-400">Contact Email</span>
+            <p className="font-medium text-forest-100">{community.contactEmail || "—"}</p>
           </div>
           <div>
-            <span className="text-zinc-400">Contact Phone</span>
-            <p className="font-medium text-zinc-800">{community.contactPhone || "—"}</p>
+            <span className="text-forest-400">Contact Phone</span>
+            <p className="font-medium text-forest-100">{community.contactPhone || "—"}</p>
           </div>
           <div>
-            <span className="text-zinc-400">Created At</span>
-            <p className="font-medium text-zinc-800">{community.createdAt ? new Date(community.createdAt).toLocaleString() : "—"}</p>
+            <span className="text-forest-400">Created At</span>
+            <p className="font-medium text-forest-100">{community.createdAt ? new Date(community.createdAt).toLocaleString() : "—"}</p>
           </div>
         </div>
 
