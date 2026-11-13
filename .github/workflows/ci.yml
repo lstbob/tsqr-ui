@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  ci:
+    uses: lstbob/tsqr-deploy/.github/workflows/node-ci.yml@main
+    with:
+      lint: true
+      dockerfile: Dockerfile
+      push-image: true
