@@ -51,7 +51,9 @@ function ToolsContent() {
 
   const [data, setData] = useState<PagedResult | null>(null);
   const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loadedKey, setLoadedKey] = useState<string | null>(null);
+  const requestKey = `${q}|${type}|${manufacturerId}|${page}`;
+  const loading = data === null || loadedKey !== requestKey;
 
   useEffect(() => {
     fetch("/api/manufacturers")
@@ -61,7 +63,7 @@ function ToolsContent() {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
+    let cancelled = false;
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (type) params.set("type", type);
@@ -70,9 +72,19 @@ function ToolsContent() {
 
     fetch(`/api/tools?${params.toString()}`)
       .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [q, type, manufacturerId, page]);
+      .then((d) => {
+        if (cancelled) return;
+        setData(d);
+        setLoadedKey(requestKey);
+      })
+      .catch(() => {
+        if (!cancelled) setLoadedKey(requestKey);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [q, type, manufacturerId, page, requestKey]);
 
   const setParam = useCallback(
     (key: string, value: string) => {
