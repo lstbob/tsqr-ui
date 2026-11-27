@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getGatewayUrl, SUPPORT_URL } from "@lib/config";
 
+export const dynamic = "force-dynamic";
+
 async function getStats() {
   try {
     const res = await fetch(`${getGatewayUrl()}/api/dashboard/stats`, { cache: "no-store" });
