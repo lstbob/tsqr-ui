@@ -102,16 +102,8 @@ function ModuleCard({
   icon: string;
   locked?: boolean;
 }) {
-  return (
-    <Link
-      href={href}
-      className={`relative rounded-lg border p-5 shadow-sm transition ${
-        locked
-          ? "cursor-not-allowed border-zinc-200 bg-zinc-50 opacity-60"
-          : "border-zinc-200 bg-white hover:shadow-md hover:border-zinc-300"
-      }`}
-      onClick={locked ? (e) => e.preventDefault() : undefined}
-    >
+  const content = (
+    <>
       {locked && (
         <span className="absolute right-3 top-3 rounded bg-zinc-200 px-2 py-0.5 text-xs font-medium text-zinc-500">
           Coming Soon
@@ -120,6 +112,26 @@ function ModuleCard({
       <span className="text-2xl">{icon}</span>
       <h3 className="mt-2 font-semibold text-zinc-900">{title}</h3>
       <p className="mt-1 text-sm text-zinc-500">{description}</p>
+    </>
+  );
+
+  if (locked) {
+    return (
+      <div
+        aria-disabled="true"
+        className="relative cursor-not-allowed rounded-lg border border-zinc-200 bg-zinc-50 p-5 opacity-60 shadow-sm"
+      >
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      className="relative rounded-lg border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 hover:shadow-md"
+    >
+      {content}
     </Link>
   );
 }
