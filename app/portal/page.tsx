@@ -78,6 +78,7 @@ export default async function PortalHome() {
         <ModuleCard href="/portal/loans" title="Loans" description="Track active loans and process returns." />
         <ModuleCard href="/portal/inventory" title="Inventory" description="Monitor tool conditions and maintenance." />
         <ModuleCard href="/soup-kitchen" title="Soup Kitchen" description="Organize community meals and track donations." />
+        <ModuleCard href="/learning" title="Learning" description="Practise and remember what you learn." />
         <ModuleCard href="/communities" title="Communities" description="Discover and manage neighbourhood communities." />
       </div>
     </div>

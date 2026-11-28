@@ -11,6 +11,7 @@ const navItems = [
   { href: "/portal/loans", label: "Loans" },
   { href: "/portal/inventory", label: "Inventory" },
   { href: "/soup-kitchen", label: "Soup Kitchen" },
+  { href: "/learning", label: "Learning" },
   { href: "/communities", label: "Communities" },
 ];
 
