@@ -31,36 +31,6 @@ async function getStats() {
   return { communities, platform };
 }
 
-function Leaves() {
-  const leaves = Array.from({ length: 10 }, (_, i) => (
-    <div key={i} className="leaf">
-      <div className="leaf-inner">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" />
-        </svg>
-      </div>
-    </div>
-  ));
-  return <div className="leaves">{leaves}</div>;
-}
-
-function ConnectionLines() {
-  return (
-    <div className="connection-lines">
-      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none">
-        <line x1="200" y1="200" x2="600" y2="400" />
-        <line x1="600" y1="400" x2="1000" y2="300" />
-        <line x1="1000" y1="300" x2="1400" y2="500" />
-        <line x1="1400" y1="500" x2="1700" y2="200" />
-        <line x1="600" y1="400" x2="800" y2="700" />
-        <line x1="800" y1="700" x2="1200" y2="800" />
-        <line x1="1200" y1="800" x2="1400" y2="500" />
-        <line x1="200" y1="200" x2="800" y2="700" />
-      </svg>
-    </div>
-  );
-}
-
 const navLinkClass =
   "text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100";
 const primaryButtonClass =
@@ -115,10 +85,7 @@ export default async function LandingPage() {
   const hasStats = communities !== null || platform !== null;
 
   return (
-    <div className="landing relative min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-      <Leaves />
-      <ConnectionLines />
-
+    <div className="landing relative min-h-screen text-zinc-900 dark:text-zinc-100">
       {/* Header */}
       <header className="relative z-10 border-b border-zinc-200 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/80">
         <nav className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
@@ -145,27 +112,26 @@ export default async function LandingPage() {
       <main className="relative z-10 mx-auto flex max-w-3xl flex-col gap-16 px-4 py-10">
         {/* Hero */}
         <section className="flex flex-col gap-6 pt-8">
-          <div
-            className="rotate-graph h-12 w-12 text-zinc-400 dark:text-zinc-600"
-            style={{ animation: "fadeIn 1.2s ease-out 0.3s forwards", opacity: 0 }}
-          >
-            <svg viewBox="0 0 100 100">
-              <line className="edge" x1="50" y1="50" x2="50" y2="10" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-              <line className="edge" x1="50" y1="50" x2="85" y2="30" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-              <line className="edge" x1="50" y1="50" x2="90" y2="65" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-              <line className="edge" x1="50" y1="50" x2="70" y2="90" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-              <line className="edge" x1="50" y1="50" x2="30" y2="90" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-              <line className="edge" x1="50" y1="50" x2="10" y2="65" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-              <line className="edge" x1="50" y1="50" x2="15" y2="30" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-              <circle cx="50" cy="50" r="5" className="fill-zinc-900 dark:fill-zinc-100" />
-              <circle cx="50" cy="10" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
-              <circle cx="85" cy="30" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
-              <circle cx="90" cy="65" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
-              <circle cx="70" cy="90" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
-              <circle cx="30" cy="90" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
-              <circle cx="10" cy="65" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
-              <circle cx="15" cy="30" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
-            </svg>
+          <div style={{ animation: "fadeIn 1.2s ease-out 0.3s forwards", opacity: 0 }}>
+            <div className="rotate-graph h-12 w-12 text-zinc-400 dark:text-zinc-600">
+              <svg viewBox="0 0 100 100">
+                <line className="edge" x1="50" y1="50" x2="50" y2="10" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+                <line className="edge" x1="50" y1="50" x2="85" y2="30" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+                <line className="edge" x1="50" y1="50" x2="90" y2="65" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+                <line className="edge" x1="50" y1="50" x2="70" y2="90" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+                <line className="edge" x1="50" y1="50" x2="30" y2="90" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+                <line className="edge" x1="50" y1="50" x2="10" y2="65" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+                <line className="edge" x1="50" y1="50" x2="15" y2="30" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+                <circle cx="50" cy="50" r="5" className="fill-zinc-900 dark:fill-zinc-100" />
+                <circle cx="50" cy="10" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+                <circle cx="85" cy="30" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+                <circle cx="90" cy="65" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+                <circle cx="70" cy="90" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+                <circle cx="30" cy="90" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+                <circle cx="10" cy="65" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+                <circle cx="15" cy="30" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+              </svg>
+            </div>
           </div>
           <h1
             className="text-4xl font-bold tracking-tight sm:text-5xl"

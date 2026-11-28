@@ -36,46 +36,46 @@ export default function MealsPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-forest-50">Meals</h1>
-        <Link href="/soup-kitchen/meals/add" className="rounded-lg bg-forest-500 px-4 py-2 text-sm font-semibold text-white hover:bg-forest-400">
+        <h1 className="text-2xl font-bold text-ui-50">Meals</h1>
+        <Link href="/soup-kitchen/meals/add" className="rounded-lg bg-ui-50 px-4 py-2 text-sm font-semibold text-ui-950 hover:bg-ui-200">
           Add Meal
         </Link>
       </div>
 
       <div className="mb-4 flex gap-3">
-        <select value={eventId} onChange={(e) => setEventId(e.target.value)} className="rounded-lg border border-forest-600 px-3 py-2 text-sm">
+        <select value={eventId} onChange={(e) => setEventId(e.target.value)} className="rounded-lg border border-ui-600 px-3 py-2 text-sm">
           <option value="">All Events</option>
           {events.map((e) => <option key={e.id} value={String(e.id)}>{e.name}</option>)}
         </select>
-        <select value={category} onChange={(e) => setCategory(e.target.value)} className="rounded-lg border border-forest-600 px-3 py-2 text-sm">
+        <select value={category} onChange={(e) => setCategory(e.target.value)} className="rounded-lg border border-ui-600 px-3 py-2 text-sm">
           {categoryOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
       </div>
 
       {loading ? (
-        <p className="py-12 text-center text-forest-400">Loading...</p>
+        <p className="py-12 text-center text-ui-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
         <div className="space-y-3">
           {data.items.map((meal) => (
-            <div key={meal.id} className="rounded-lg border border-forest-700 bg-forest-900 p-4 shadow-sm shadow-black/20">
+            <div key={meal.id} className="rounded-lg border border-ui-700 bg-ui-900 p-4 shadow-sm shadow-black/20">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="font-semibold text-forest-50">{meal.name}</p>
-                  <p className="text-sm text-forest-200">{meal.description}</p>
-                  <p className="mt-1 text-xs text-forest-400">Event: {meal.eventName}</p>
+                  <p className="font-semibold text-ui-50">{meal.name}</p>
+                  <p className="text-sm text-ui-200">{meal.description}</p>
+                  <p className="mt-1 text-xs text-ui-400">Event: {meal.eventName}</p>
                 </div>
                 <div className="text-right text-sm">
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-medium bg-blue-900/40 text-blue-300`}>
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300`}>
                     {meal.categoryName}
                   </span>
-                  <p className="mt-1 text-forest-200">{meal.quantityPrepared ?? 0} / {meal.quantityNeeded ?? 0} prepared</p>
+                  <p className="mt-1 text-ui-200">{meal.quantityPrepared ?? 0} / {meal.quantityNeeded ?? 0} prepared</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p className="py-12 text-center text-forest-400">No meals found.</p>
+        <p className="py-12 text-center text-ui-400">No meals found.</p>
       )}
     </div>
   );

@@ -8,15 +8,15 @@ import type { PagedResult, Community } from "@lib/types";
 function statusBadgeClass(statusName: string) {
   switch (statusName) {
     case "PendingConfirmation":
-      return "bg-yellow-900/40 text-yellow-300";
+      return "bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300";
     case "Active":
-      return "bg-green-900/40 text-green-300";
+      return "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300";
     case "Suspended":
-      return "bg-red-900/40 text-red-300";
+      return "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300";
     case "Archived":
       return "bg-gray-800 text-gray-300";
     default:
-      return "bg-forest-800 text-forest-100";
+      return "bg-ui-800 text-ui-100";
   }
 }
 
@@ -33,7 +33,7 @@ export default function BrowseCommunitiesPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-forest-50">Browse Communities</h1>
+        <h1 className="text-2xl font-bold text-ui-50">Browse Communities</h1>
       </div>
 
       <div className="mb-4 flex gap-3">
@@ -42,29 +42,29 @@ export default function BrowseCommunitiesPage() {
           placeholder="Search by country..."
           value={country}
           onChange={(e) => setCountry(e.target.value)}
-          className="rounded-lg border border-forest-600 px-3 py-2 text-sm outline-none focus:border-forest-400"
+          className="rounded-lg border border-ui-600 px-3 py-2 text-sm outline-none focus:border-ui-400"
         />
         <input
           type="text"
           placeholder="Search by city..."
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="rounded-lg border border-forest-600 px-3 py-2 text-sm outline-none focus:border-forest-400"
+          className="rounded-lg border border-ui-600 px-3 py-2 text-sm outline-none focus:border-ui-400"
         />
       </div>
 
       {loading ? (
-        <p className="py-12 text-center text-forest-400">Loading...</p>
+        <p className="py-12 text-center text-ui-400">Loading...</p>
       ) : data && data.items && data.items.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {data.items.map((c: Community) => (
             <Link
               key={c.id}
               href={`/communities/${c.id}`}
-              className="block rounded-lg border border-forest-700 bg-forest-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-forest-500"
+              className="block rounded-lg border border-ui-700 bg-ui-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-ui-500"
             >
-              <h3 className="font-semibold text-forest-50">{c.name}</h3>
-              <p className="mt-1 text-sm text-forest-200">
+              <h3 className="font-semibold text-ui-50">{c.name}</h3>
+              <p className="mt-1 text-sm text-ui-200">
                 {c.neighbourhood}, {c.city}, {c.country}
               </p>
               <div className="mt-3">
@@ -76,7 +76,7 @@ export default function BrowseCommunitiesPage() {
           ))}
         </div>
       ) : (
-        <p className="py-12 text-center text-forest-400">No communities found.</p>
+        <p className="py-12 text-center text-ui-400">No communities found.</p>
       )}
     </div>
   );

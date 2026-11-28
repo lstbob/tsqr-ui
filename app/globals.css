@@ -1,23 +1,39 @@
 @import "tailwindcss";
 
 @theme {
-  --color-forest-50: #e0e8d8;
-  --color-forest-100: #c8d8b8;
-  --color-forest-200: #a8c898;
-  --color-forest-300: #8ab96a;
-  --color-forest-400: #6a9e4a;
-  --color-forest-500: #5a9e4a;
-  --color-forest-600: #4a7c3a;
-  --color-forest-700: #3a5a2a;
-  --color-forest-800: #2a4a2a;
-  --color-forest-900: #1a2e1a;
-  --color-forest-950: #0d1f0d;
-  --color-surface-elevated: #1f3820;
+  --color-ui-50: #09090b;
+  --color-ui-100: #18181b;
+  --color-ui-200: #3f3f46;
+  --color-ui-300: #52525b;
+  --color-ui-400: #71717a;
+  --color-ui-500: #a1a1aa;
+  --color-ui-600: #d4d4d8;
+  --color-ui-700: #e4e4e7;
+  --color-ui-800: #f4f4f5;
+  --color-ui-900: #fafafa;
+  --color-ui-950: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-ui-50: #fafafa;
+    --color-ui-100: #f4f4f5;
+    --color-ui-200: #d4d4d8;
+    --color-ui-300: #a1a1aa;
+    --color-ui-400: #71717a;
+    --color-ui-500: #52525b;
+    --color-ui-600: #3f3f46;
+    --color-ui-700: #27272a;
+    --color-ui-800: #18181b;
+    --color-ui-900: #111113;
+    --color-ui-950: #09090b;
+    color-scheme: dark;
+  }
 }
 
 body {
-  background: #0d1f0d;
-  color: #e0e8d8;
+  background: var(--color-ui-950);
+  color: var(--color-ui-100);
   font-family: var(--font-geist-sans);
 }
 
@@ -33,7 +49,7 @@ body {
   position: absolute;
   width: 32px;
   height: 32px;
-  opacity: 0.08;
+  opacity: 0.18;
 }
 .leaf:nth-child(1) { left: 5%;  animation: drift 14s linear infinite; }
 .leaf:nth-child(2) { left: 18%; animation: drift 16s linear infinite 2s; }
@@ -51,7 +67,7 @@ body {
 .leaf:nth-child(6) .leaf-inner { animation-duration: 2.5s; }
 .leaf:nth-child(8) .leaf-inner { animation-duration: 3.5s; }
 .leaf:nth-child(10) .leaf-inner { animation-duration: 2s; }
-.leaf-inner svg { width: 100%; height: 100%; fill: #5a9e4a; }
+.leaf-inner svg { width: 100%; height: 100%; fill: var(--color-ui-300); }
 
 @keyframes drift {
   0% { top: 110%; }
@@ -68,14 +84,14 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.08;
 }
 .connection-lines svg {
   width: 100%;
   height: 100%;
 }
 .connection-lines line {
-  stroke: #5a9e4a;
+  stroke: var(--color-ui-400);
   stroke-width: 1;
   animation: pulse-line 4s ease-in-out infinite;
 }
@@ -86,6 +102,7 @@ body {
 
 /* Rotating graph */
 .rotate-graph {
+  transform-origin: center;
   animation: spin 20s linear infinite;
 }
 @keyframes spin {
@@ -110,20 +127,13 @@ body {
 
 /* Scrollbar for dark theme */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #0d1f0d; }
-::-webkit-scrollbar-thumb { background: #3a5a2a; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #4a7c3a; }
+::-webkit-scrollbar-track { background: var(--color-ui-950); }
+::-webkit-scrollbar-thumb { background: var(--color-ui-600); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-ui-500); }
 
-/* Landing page: neutral animation colours */
-.landing .leaf-inner svg { fill: #a1a1aa; }
-.landing .connection-lines line { stroke: #a1a1aa; }
-@media (prefers-color-scheme: dark) {
-  .landing .leaf-inner svg { fill: #52525b; }
-  .landing .connection-lines line { stroke: #52525b; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .landing .leaf,
-  .landing .leaf-inner,
-  .landing .connection-lines line,
-  .landing .rotate-graph { animation: none; }
+  .leaf,
+  .leaf-inner,
+  .connection-lines line,
+  .rotate-graph { animation: none; }
 }

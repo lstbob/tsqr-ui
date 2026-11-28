@@ -35,26 +35,26 @@ export default function LoanDetailPage() {
     setActionLoading(false);
   }
 
-  if (loading) return <p className="py-12 text-center text-forest-400">Loading...</p>;
-  if (!item) return <p className="py-12 text-center text-forest-400">Loan not found.</p>;
+  if (loading) return <p className="py-12 text-center text-ui-400">Loading...</p>;
+  if (!item) return <p className="py-12 text-center text-ui-400">Loan not found.</p>;
 
   return (
     <div className="max-w-2xl">
-      <h1 className="mb-6 text-2xl font-bold text-forest-50">Loan Details — Item #{item.id}</h1>
-      <div className="mb-6 rounded-lg border border-forest-700 bg-forest-900 p-6 shadow-sm shadow-black/20">
+      <h1 className="mb-6 text-2xl font-bold text-ui-50">Loan Details — Item #{item.id}</h1>
+      <div className="mb-6 rounded-lg border border-ui-700 bg-ui-900 p-6 shadow-sm shadow-black/20">
         <dl className="grid grid-cols-2 gap-4 text-sm">
-          <div><dt className="text-forest-400">Tool</dt><dd className="font-medium text-forest-100">{item.toolModel}</dd></div>
-          <div><dt className="text-forest-400">Serial Number</dt><dd className="font-medium text-forest-100">{item.serialNumber}</dd></div>
-          <div><dt className="text-forest-400">Current Holder</dt><dd className="font-medium text-forest-100">{item.currentHolderName || "—"}</dd></div>
-          <div><dt className="text-forest-400">Original Owner</dt><dd className="font-medium text-forest-100">{item.originalOwnerName || "—"}</dd></div>
-          <div><dt className="text-forest-400">Last Borrowed</dt><dd className="font-medium text-forest-100">{item.lastBorrowedDate ? new Date(item.lastBorrowedDate).toLocaleDateString() : "—"}</dd></div>
-          <div><dt className="text-forest-400">Loan Count</dt><dd className="font-medium text-forest-100">{item.loanCount}</dd></div>
-          <div><dt className="text-forest-400">Condition</dt><dd className="font-medium text-forest-100">{item.conditionName}</dd></div>
-          <div><dt className="text-forest-400">Under Repair</dt><dd className="font-medium text-forest-100">{item.isUnderRepair ? "Yes" : "No"}</dd></div>
+          <div><dt className="text-ui-400">Tool</dt><dd className="font-medium text-ui-100">{item.toolModel}</dd></div>
+          <div><dt className="text-ui-400">Serial Number</dt><dd className="font-medium text-ui-100">{item.serialNumber}</dd></div>
+          <div><dt className="text-ui-400">Current Holder</dt><dd className="font-medium text-ui-100">{item.currentHolderName || "—"}</dd></div>
+          <div><dt className="text-ui-400">Original Owner</dt><dd className="font-medium text-ui-100">{item.originalOwnerName || "—"}</dd></div>
+          <div><dt className="text-ui-400">Last Borrowed</dt><dd className="font-medium text-ui-100">{item.lastBorrowedDate ? new Date(item.lastBorrowedDate).toLocaleDateString() : "—"}</dd></div>
+          <div><dt className="text-ui-400">Loan Count</dt><dd className="font-medium text-ui-100">{item.loanCount}</dd></div>
+          <div><dt className="text-ui-400">Condition</dt><dd className="font-medium text-ui-100">{item.conditionName}</dd></div>
+          <div><dt className="text-ui-400">Under Repair</dt><dd className="font-medium text-ui-100">{item.isUnderRepair ? "Yes" : "No"}</dd></div>
         </dl>
       </div>
-      {result && <p className="mb-4 rounded-lg bg-forest-800 px-4 py-2 text-sm text-forest-100">{result}</p>}
-      <h2 className="mb-3 text-lg font-semibold text-forest-100">Actions</h2>
+      {result && <p className="mb-4 rounded-lg bg-ui-800 px-4 py-2 text-sm text-ui-100">{result}</p>}
+      <h2 className="mb-3 text-lg font-semibold text-ui-100">Actions</h2>
       <button onClick={markNotReturned} disabled={actionLoading} className="rounded-lg bg-red-800 px-4 py-2 text-sm font-medium text-red-100 hover:bg-red-600 disabled:opacity-50">
         {actionLoading ? "..." : "Mark as Not Returned"}
       </button>

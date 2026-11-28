@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { cookies } from "next/headers";
 import { getGatewayUrl, ACCESS_TOKEN_COOKIE } from "@lib/config";
+import ModuleCard from "../_components/ModuleCard";
 
 async function getDashboard() {
   const cookieStore = await cookies();
@@ -28,10 +28,10 @@ export default async function PortalHome() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-forest-50">
+        <h1 className="text-2xl font-bold text-ui-50">
           Welcome back, {user?.fullName?.split(" ")[0] || "there"}!
         </h1>
-        <p className="mt-1 text-forest-200">Manage your community tool library from here.</p>
+        <p className="mt-1 text-ui-200">Manage your community tool library from here.</p>
       </div>
 
       {stats && (
@@ -46,7 +46,7 @@ export default async function PortalHome() {
 
       {soupKitchenStats && (
         <>
-          <h2 className="mb-3 text-lg font-semibold text-forest-100">Soup Kitchen Overview</h2>
+          <h2 className="mb-3 text-lg font-semibold text-ui-100">Soup Kitchen Overview</h2>
           <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
             <StatCard label="Total Events" value={soupKitchenStats.totalEvents} />
             <StatCard label="Upcoming" value={soupKitchenStats.upcomingEvents} />
@@ -59,7 +59,7 @@ export default async function PortalHome() {
 
       {dashboard?.communitiesStats && (
         <>
-          <h2 className="mb-3 text-lg font-semibold text-forest-100">Communities Overview</h2>
+          <h2 className="mb-3 text-lg font-semibold text-ui-100">Communities Overview</h2>
           <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
             <StatCard label="Total Communities" value={dashboard.communitiesStats.totalCommunities} />
             <StatCard label="Active" value={dashboard.communitiesStats.active} />
@@ -70,15 +70,15 @@ export default async function PortalHome() {
         </>
       )}
 
-      <h2 className="mb-4 text-lg font-semibold text-forest-100">Quick Access</h2>
+      <h2 className="mb-4 text-lg font-semibold text-ui-100">Quick Access</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <ModuleCard href="/tools" title="Tool Library" description="Browse, search, and manage the tool catalog." icon="🔧" />
-        <ModuleCard href="/portal/members" title="Members" description="Manage registrations, verification, and membership status." icon="👥" />
-        <ModuleCard href="/portal/reservations" title="Reservations" description="View and manage tool reservations and waitlists." icon="📅" />
-        <ModuleCard href="/portal/loans" title="Loans" description="Track active loans and process returns." icon="📦" />
-        <ModuleCard href="/portal/inventory" title="Inventory" description="Monitor tool conditions and maintenance." icon="📋" />
-        <ModuleCard href="/soup-kitchen" title="Soup Kitchen" description="Organize community meals and track donations." icon="🍲" />
-        <ModuleCard href="/communities" title="Communities" description="Discover and manage neighbourhood communities." icon="🌍" />
+        <ModuleCard href="/tools" title="Tool Library" description="Browse, search, and manage the tool catalog." />
+        <ModuleCard href="/portal/members" title="Members" description="Manage registrations, verification, and membership status." />
+        <ModuleCard href="/portal/reservations" title="Reservations" description="View and manage tool reservations and waitlists." />
+        <ModuleCard href="/portal/loans" title="Loans" description="Track active loans and process returns." />
+        <ModuleCard href="/portal/inventory" title="Inventory" description="Monitor tool conditions and maintenance." />
+        <ModuleCard href="/soup-kitchen" title="Soup Kitchen" description="Organize community meals and track donations." />
+        <ModuleCard href="/communities" title="Communities" description="Discover and manage neighbourhood communities." />
       </div>
     </div>
   );
@@ -86,19 +86,9 @@ export default async function PortalHome() {
 
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-forest-700 bg-forest-900 p-5 shadow-sm shadow-black/20">
-      <p className="text-2xl font-bold text-forest-50">{value}</p>
-      <p className="text-sm text-forest-400">{label}</p>
+    <div className="rounded-lg border border-ui-700 bg-ui-900 p-5 shadow-sm shadow-black/20">
+      <p className="text-2xl font-bold text-ui-50">{value}</p>
+      <p className="text-sm text-ui-400">{label}</p>
     </div>
-  );
-}
-
-function ModuleCard({ href, title, description, icon }: { href: string; title: string; description: string; icon: string }) {
-  return (
-    <Link href={href} className="rounded-lg border border-forest-700 bg-forest-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-forest-500">
-      <span className="text-2xl">{icon}</span>
-      <h3 className="mt-2 font-semibold text-forest-50">{title}</h3>
-      <p className="mt-1 text-sm text-forest-200">{description}</p>
-    </Link>
   );
 }

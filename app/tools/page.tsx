@@ -41,10 +41,10 @@ const toolTypeOptions = [
 ];
 
 const typeColors: Record<string, string> = {
-  "Hand Tool": "bg-blue-900/40 text-blue-300",
-  "Power Tool": "bg-amber-900/40 text-amber-300",
-  "Gardening Tool": "bg-green-900/40 text-green-300",
-  "Construction Tool": "bg-purple-900/40 text-purple-300",
+  "Hand Tool": "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300",
+  "Power Tool": "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300",
+  "Gardening Tool": "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300",
+  "Construction Tool": "bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300",
   "Specialty Tool": "bg-rose-900/40 text-rose-300",
 };
 
@@ -102,8 +102,8 @@ function ToolsContent() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-forest-50">Tool Library</h1>
-        <Link href="/tools/register" className="rounded-lg bg-forest-500 px-4 py-2 text-sm font-semibold text-forest-950 transition hover:bg-forest-400">
+        <h1 className="text-2xl font-bold text-ui-50">Tool Library</h1>
+        <Link href="/tools/register" className="rounded-lg bg-ui-50 px-4 py-2 text-sm font-semibold text-ui-950 transition hover:bg-ui-200">
           Register Tool
         </Link>
       </div>
@@ -122,7 +122,7 @@ function ToolsContent() {
       </div>
 
       {loading ? (
-        <p className="py-12 text-center text-forest-400">Loading...</p>
+        <p className="py-12 text-center text-ui-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -130,16 +130,16 @@ function ToolsContent() {
               <Link
                 key={tool.id}
                 href={`/tools/${tool.id}`}
-                className="block rounded-lg border border-forest-700 bg-forest-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-forest-500"
+                className="block rounded-lg border border-ui-700 bg-ui-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-ui-500"
               >
                 <div className="mb-2 flex items-start justify-between gap-2">
-                  <h3 className="font-semibold text-forest-50 truncate">{tool.model}</h3>
-                  <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${typeColors[tool.toolTypeName] ?? "bg-forest-800 text-forest-100"}`}>
+                  <h3 className="font-semibold text-ui-50 truncate">{tool.model}</h3>
+                  <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${typeColors[tool.toolTypeName] ?? "bg-ui-800 text-ui-100"}`}>
                     {tool.toolTypeName}
                   </span>
                 </div>
-                <p className="mb-3 line-clamp-2 text-sm text-forest-200">{tool.description}</p>
-                <div className="flex items-center justify-between text-xs text-forest-400">
+                <p className="mb-3 line-clamp-2 text-sm text-ui-200">{tool.description}</p>
+                <div className="flex items-center justify-between text-xs text-ui-400">
                   <span>{tool.manufacturerName}</span>
                   <span>{tool.amortizationRateName} amortization</span>
                 </div>
@@ -154,7 +154,7 @@ function ToolsContent() {
           />
         </>
       ) : (
-        <p className="py-12 text-center text-forest-400">No tools found.</p>
+        <p className="py-12 text-center text-ui-400">No tools found.</p>
       )}
     </div>
   );
@@ -162,7 +162,7 @@ function ToolsContent() {
 
 export default function ToolsPage() {
   return (
-    <Suspense fallback={<p className="py-12 text-center text-forest-400">Loading...</p>}>
+    <Suspense fallback={<p className="py-12 text-center text-ui-400">Loading...</p>}>
       <ToolsContent />
     </Suspense>
   );

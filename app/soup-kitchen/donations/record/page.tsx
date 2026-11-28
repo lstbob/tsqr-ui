@@ -45,15 +45,15 @@ export default function RecordDonationPage() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="mb-6 text-2xl font-bold text-forest-50">Record Donation</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-forest-700 bg-forest-900 p-6 shadow-sm shadow-black/20">
+      <h1 className="mb-6 text-2xl font-bold text-ui-50">Record Donation</h1>
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-ui-700 bg-ui-900 p-6 shadow-sm shadow-black/20">
         <SelectField label="Event" name="eventId" options={events.map((e) => ({ value: String(e.id), label: e.name }))} required />
         <Field label="Donor Name" name="donorName" required />
         <Field label="Item" name="item" required />
         <Field label="Quantity" name="quantity" type="number" required />
         <Field label="Notes" name="notes" textarea />
-        {error && <p className="rounded-lg bg-red-900/30 px-4 py-2 text-sm text-red-300">{error}</p>}
-        <button type="submit" disabled={loading} className="rounded-lg bg-forest-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-forest-400 disabled:opacity-50">
+        {error && <p className="rounded-lg bg-red-50 dark:bg-red-900/30 px-4 py-2 text-sm text-red-700 dark:text-red-300">{error}</p>}
+        <button type="submit" disabled={loading} className="rounded-lg bg-ui-50 px-6 py-2.5 text-sm font-semibold text-ui-950 hover:bg-ui-200 disabled:opacity-50">
           {loading ? "Recording..." : "Record Donation"}
         </button>
       </form>
@@ -64,11 +64,11 @@ export default function RecordDonationPage() {
 function Field({ label, name, type = "text", required, textarea }: { label: string; name: string; type?: string; required?: boolean; textarea?: boolean }) {
   return (
     <div>
-      <label className="mb-1 block text-sm font-medium text-forest-100">{label}{required && " *"}</label>
+      <label className="mb-1 block text-sm font-medium text-ui-100">{label}{required && " *"}</label>
       {textarea ? (
-        <textarea name={name} required={required} rows={3} className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400" />
+        <textarea name={name} required={required} rows={3} className="w-full rounded-lg border border-ui-600 px-4 py-2 text-sm outline-none focus:border-ui-400" />
       ) : (
-        <input type={type} name={name} required={required} className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400" />
+        <input type={type} name={name} required={required} className="w-full rounded-lg border border-ui-600 px-4 py-2 text-sm outline-none focus:border-ui-400" />
       )}
     </div>
   );
@@ -77,8 +77,8 @@ function Field({ label, name, type = "text", required, textarea }: { label: stri
 function SelectField({ label, name, options, required }: { label: string; name: string; options: { value: string; label: string }[]; required?: boolean }) {
   return (
     <div>
-      <label className="mb-1 block text-sm font-medium text-forest-100">{label}{required && " *"}</label>
-      <select name={name} required={required} className="w-full rounded-lg border border-forest-600 px-4 py-2 text-sm outline-none focus:border-forest-400">
+      <label className="mb-1 block text-sm font-medium text-ui-100">{label}{required && " *"}</label>
+      <select name={name} required={required} className="w-full rounded-lg border border-ui-600 px-4 py-2 text-sm outline-none focus:border-ui-400">
         {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>
