@@ -110,3 +110,56 @@ export interface Volunteer {
   statusName: string;
   hoursScheduled?: number | null;
 }
+
+export interface LearningPage<T> {
+  items: T[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface LearningDeck {
+  id: number;
+  name: string;
+  cardCount: number;
+  dueCount: number;
+  createdAt: string;
+}
+
+export interface LearningCard {
+  id: number;
+  cue: string;
+  expectedAnswer: string;
+  box: number;
+  dueAt: string;
+  reviewCount: number;
+  lapseCount: number;
+}
+
+export interface PracticeCard {
+  cardId: number;
+  deckId: number;
+  deckName: string;
+  cue: string;
+  box: number;
+}
+
+export interface ReviewOutcome {
+  box: number;
+  dueAt: string;
+}
+
+export interface CalibrationRow {
+  confidence: number;
+  confidenceName: string;
+  reviews: number;
+  correct: number;
+}
+
+export interface LearningStats {
+  totalDecks: number;
+  totalCards: number;
+  dueNow: number;
+  totalReviews: number;
+  calibration: CalibrationRow[];
+}

@@ -57,6 +57,11 @@ const areas = [
     title: "Soup Kitchen",
     text: "Plan meal events, register guests, sign up to volunteer and record donations.",
   },
+  {
+    href: "/learning",
+    title: "Learning",
+    text: "Remember what you learn. Practise with recall, spaced reviews and mixed topics.",
+  },
 ];
 
 const pillars = [
@@ -101,6 +106,9 @@ export default async function LandingPage() {
             </li>
             <li>
               <Link href="/soup-kitchen" className={navLinkClass}>Soup Kitchen</Link>
+            </li>
+            <li>
+              <Link href="/learning" className={navLinkClass}>Learning</Link>
             </li>
             <li>
               <Link href="/login" className={navLinkClass}>Sign in</Link>
