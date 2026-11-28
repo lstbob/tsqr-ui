@@ -95,6 +95,10 @@ body {
   stroke-width: 1.5;
   animation: pulse-line 4s ease-in-out infinite;
 }
+.pulse-text {
+  color: var(--color-ui-400);
+  animation: pulse-line 4s ease-in-out infinite;
+}
 @keyframes pulse-line {
   0%, 100% { opacity: 0; }
   50% { opacity: 1; }
@@ -135,5 +139,6 @@ body {
   .leaf,
   .leaf-inner,
   .connection-lines line,
+  .pulse-text,
   .rotate-graph { animation: none; }
 }
