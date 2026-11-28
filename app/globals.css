@@ -84,7 +84,7 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.08;
+  opacity: 0.18;
 }
 .connection-lines svg {
   width: 100%;
@@ -92,11 +92,11 @@ body {
 }
 .connection-lines line {
   stroke: var(--color-ui-400);
-  stroke-width: 1;
+  stroke-width: 1.5;
   animation: pulse-line 4s ease-in-out infinite;
 }
 @keyframes pulse-line {
-  0%, 100% { opacity: 0.3; }
+  0%, 100% { opacity: 0; }
   50% { opacity: 1; }
 }
 
