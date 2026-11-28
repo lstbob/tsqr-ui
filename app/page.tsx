@@ -40,7 +40,7 @@ export default function LandingPage() {
             className="max-w-2xl text-lg text-zinc-600 dark:text-zinc-400"
             style={{ animation: "fadeIn 1.2s ease-out 0.8s forwards", opacity: 0 }}
           >
-            A neighbourhood toolkit for sharing and mutual aid. Borrow what you need, share what you have, and help the people around you.
+            A neighbourhood toolkit for sharing and mutual aid. Borrow what you need share what you don't, and help the people around you.
           </p>
           <p
             className="pt-2 text-sm font-medium text-zinc-500 dark:text-zinc-400"
