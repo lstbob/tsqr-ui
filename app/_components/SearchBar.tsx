@@ -25,7 +25,7 @@ export default function SearchBar({ value, onChange, placeholder = "Search..." }
       defaultValue={value}
       onChange={handleChange}
       placeholder={placeholder}
-      className="w-full rounded-lg border border-forest-600 bg-forest-950 px-4 py-2 text-sm text-forest-50 outline-none placeholder:text-forest-500 focus:border-forest-400 focus:ring-1 focus:ring-forest-400"
+      className="w-full rounded-lg border border-ui-600 bg-ui-950 px-4 py-2 text-sm text-ui-50 outline-none placeholder:text-ui-500 focus:border-ui-400 focus:ring-1 focus:ring-ui-400"
     />
   );
 }

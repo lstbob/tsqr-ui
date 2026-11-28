@@ -44,31 +44,31 @@ export default function MemberDetailPage() {
     setActionLoading("");
   }
 
-  if (loading) return <p className="py-12 text-center text-forest-400">Loading...</p>;
-  if (!member) return <p className="py-12 text-center text-forest-400">Member not found.</p>;
+  if (loading) return <p className="py-12 text-center text-ui-400">Loading...</p>;
+  if (!member) return <p className="py-12 text-center text-ui-400">Member not found.</p>;
 
   return (
     <div className="max-w-3xl">
-      <h1 className="mb-6 text-2xl font-bold text-forest-50">{member.fullName}</h1>
-      <div className="mb-6 rounded-lg border border-forest-700 bg-forest-900 p-6 shadow-sm shadow-black/20">
+      <h1 className="mb-6 text-2xl font-bold text-ui-50">{member.fullName}</h1>
+      <div className="mb-6 rounded-lg border border-ui-700 bg-ui-900 p-6 shadow-sm shadow-black/20">
         <dl className="grid grid-cols-2 gap-4 text-sm">
-          <div><dt className="text-forest-400">ID</dt><dd className="font-medium text-forest-100">{member.id}</dd></div>
-          <div><dt className="text-forest-400">Email</dt><dd className="font-medium text-forest-100">{member.email}</dd></div>
-          <div><dt className="text-forest-400">Phone</dt><dd className="font-medium text-forest-100">{member.phoneNumber}</dd></div>
-          <div><dt className="text-forest-400">Age</dt><dd className="font-medium text-forest-100">{member.age}</dd></div>
-          <div><dt className="text-forest-400">Address</dt><dd className="font-medium text-forest-100">{member.address}</dd></div>
-          <div><dt className="text-forest-400">Status</dt><dd><span className={`rounded-full px-2 py-0.5 text-xs font-medium ${member.statusName === "Active" ? "bg-green-900/40 text-green-300" : member.statusName === "Suspended" ? "bg-yellow-900/40 text-yellow-300" : "bg-red-900/40 text-red-300"}`}>{member.statusName}</span></dd></div>
-          <div><dt className="text-forest-400">Membership</dt><dd className="font-medium text-forest-100">{member.membershipTypeName || "—"}</dd></div>
-          <div><dt className="text-forest-400">Verified</dt><dd className="font-medium text-forest-100">{member.isVerified ? "Yes" : "No"}</dd></div>
-          {member.startDate && <div><dt className="text-forest-400">Start Date</dt><dd className="font-medium text-forest-100">{new Date(member.startDate).toLocaleDateString()}</dd></div>}
-          {member.endDate && <div><dt className="text-forest-400">End Date</dt><dd className="font-medium text-forest-100">{new Date(member.endDate).toLocaleDateString()}</dd></div>}
+          <div><dt className="text-ui-400">ID</dt><dd className="font-medium text-ui-100">{member.id}</dd></div>
+          <div><dt className="text-ui-400">Email</dt><dd className="font-medium text-ui-100">{member.email}</dd></div>
+          <div><dt className="text-ui-400">Phone</dt><dd className="font-medium text-ui-100">{member.phoneNumber}</dd></div>
+          <div><dt className="text-ui-400">Age</dt><dd className="font-medium text-ui-100">{member.age}</dd></div>
+          <div><dt className="text-ui-400">Address</dt><dd className="font-medium text-ui-100">{member.address}</dd></div>
+          <div><dt className="text-ui-400">Status</dt><dd><span className={`rounded-full px-2 py-0.5 text-xs font-medium ${member.statusName === "Active" ? "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300" : member.statusName === "Suspended" ? "bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300" : "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300"}`}>{member.statusName}</span></dd></div>
+          <div><dt className="text-ui-400">Membership</dt><dd className="font-medium text-ui-100">{member.membershipTypeName || "—"}</dd></div>
+          <div><dt className="text-ui-400">Verified</dt><dd className="font-medium text-ui-100">{member.isVerified ? "Yes" : "No"}</dd></div>
+          {member.startDate && <div><dt className="text-ui-400">Start Date</dt><dd className="font-medium text-ui-100">{new Date(member.startDate).toLocaleDateString()}</dd></div>}
+          {member.endDate && <div><dt className="text-ui-400">End Date</dt><dd className="font-medium text-ui-100">{new Date(member.endDate).toLocaleDateString()}</dd></div>}
         </dl>
       </div>
 
-      {error && <p className="mb-4 rounded-lg bg-red-900/30 px-4 py-2 text-sm text-red-300">{error}</p>}
-      {actionResult && <p className="mb-4 rounded-lg bg-green-900/30 px-4 py-2 text-sm text-green-300">{actionResult}</p>}
+      {error && <p className="mb-4 rounded-lg bg-red-50 dark:bg-red-900/30 px-4 py-2 text-sm text-red-700 dark:text-red-300">{error}</p>}
+      {actionResult && <p className="mb-4 rounded-lg bg-green-50 dark:bg-green-900/30 px-4 py-2 text-sm text-green-700 dark:text-green-300">{actionResult}</p>}
 
-      <h2 className="mb-3 text-lg font-semibold text-forest-100">Administrative Actions</h2>
+      <h2 className="mb-3 text-lg font-semibold text-ui-100">Administrative Actions</h2>
       <div className="flex flex-wrap gap-2">
         {!member.isVerified && (
           <button onClick={() => postAction("members/verify", { memberId: member.id, adminId: 1 }, "Verify")} disabled={!!actionLoading} className="rounded-lg bg-green-800 px-4 py-2 text-sm font-medium text-green-100 hover:bg-green-600 disabled:opacity-50">

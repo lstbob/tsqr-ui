@@ -18,18 +18,18 @@ export default function PortalNav({}: { role: string }) {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center gap-1">
+    <nav className="flex flex-wrap items-center gap-1">
       {navItems.map((item) => {
         const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
         return (
           <Link
             key={item.href}
             href={item.href}
-            className={`rounded-md px-3 py-1.5 text-sm font-medium transition ${
+            className={
               isActive
-                ? "bg-forest-800 text-forest-100"
-                : "text-forest-200 hover:text-forest-50 hover:bg-forest-800"
-            }`}
+                ? "rounded-md bg-ui-800 px-3 py-1.5 text-sm font-medium text-ui-50"
+                : "rounded-md px-3 py-1.5 text-sm text-ui-300 transition-colors hover:text-ui-50"
+            }
           >
             {item.label}
           </Link>

@@ -24,20 +24,20 @@ export default function InventoryPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-forest-50">Inventory</h1>
+      <h1 className="mb-6 text-2xl font-bold text-ui-50">Inventory</h1>
 
       <div className="mb-4">
-        <select value={status} onChange={(e) => setStatus(e.target.value)} className="rounded-lg border border-forest-600 px-3 py-2 text-sm">
+        <select value={status} onChange={(e) => setStatus(e.target.value)} className="rounded-lg border border-ui-600 px-3 py-2 text-sm">
           {statusOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
       </div>
 
       {loading ? (
-        <p className="py-12 text-center text-forest-400">Loading...</p>
+        <p className="py-12 text-center text-ui-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
-        <div className="overflow-hidden rounded-lg border border-forest-700">
+        <div className="overflow-hidden rounded-lg border border-ui-700">
           <table className="w-full text-sm">
-            <thead className="text-left text-forest-200">
+            <thead className="text-left text-ui-200">
               <tr>
                 <th className="px-4 py-2 font-medium">ID</th>
                 <th className="px-4 py-2 font-medium">Tool</th>
@@ -50,29 +50,29 @@ export default function InventoryPage() {
             </thead>
             <tbody>
               {data.items.map((item) => (
-                <tr key={item.id} className="border-t border-forest-700 hover:bg-forest-800">
-                  <td className="px-4 py-2 text-forest-400">{item.id}</td>
-                  <td className="px-4 py-2 font-medium text-forest-50">{item.toolModel}</td>
-                  <td className="px-4 py-2 text-forest-200">{item.serialNumber}</td>
+                <tr key={item.id} className="border-t border-ui-700 hover:bg-ui-800">
+                  <td className="px-4 py-2 text-ui-400">{item.id}</td>
+                  <td className="px-4 py-2 font-medium text-ui-50">{item.toolModel}</td>
+                  <td className="px-4 py-2 text-ui-200">{item.serialNumber}</td>
                   <td className="px-4 py-2">
                     <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                      item.statusName === "Available" ? "bg-green-900/40 text-green-300" :
-                      item.statusName === "Reserved" ? "bg-yellow-900/40 text-yellow-300" :
-                      item.statusName === "Loaned" ? "bg-blue-900/40 text-blue-300" :
-                      item.statusName === "UnderMaintenance" ? "bg-orange-900/40 text-orange-300" :
-                      "bg-red-900/40 text-red-300"
+                      item.statusName === "Available" ? "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300" :
+                      item.statusName === "Reserved" ? "bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300" :
+                      item.statusName === "Loaned" ? "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300" :
+                      item.statusName === "UnderMaintenance" ? "bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300" :
+                      "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300"
                     }`}>{item.statusName}</span>
                   </td>
-                  <td className="px-4 py-2 text-forest-200">{item.conditionName}</td>
-                  <td className="px-4 py-2 text-forest-200">{item.currentHolderName || "—"}</td>
-                  <td className="px-4 py-2"><Link href={`/portal/inventory/${item.id}`} className="text-forest-300 hover:underline">Manage</Link></td>
+                  <td className="px-4 py-2 text-ui-200">{item.conditionName}</td>
+                  <td className="px-4 py-2 text-ui-200">{item.currentHolderName || "—"}</td>
+                  <td className="px-4 py-2"><Link href={`/portal/inventory/${item.id}`} className="text-ui-300 hover:underline">Manage</Link></td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <p className="py-12 text-center text-forest-400">No inventory items found.</p>
+        <p className="py-12 text-center text-ui-400">No inventory items found.</p>
       )}
     </div>
   );
