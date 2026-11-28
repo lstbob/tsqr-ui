@@ -3,246 +3,217 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TownsSquare — Coming Soon</title>
+    <title>TownsSquare</title>
+    <meta name="description" content="A neighbourhood toolkit for sharing and mutual aid." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      :root {
+        --color-ui-50: #09090b;
+        --color-ui-100: #18181b;
+        --color-ui-300: #52525b;
+        --color-ui-400: #71717a;
+        --color-ui-950: #ffffff;
+        --text: #18181b;
+        --muted: #71717a;
+        --body: #52525b;
+        --hub: #18181b;
+        --node: #a1a1aa;
+        --logo: #a1a1aa;
       }
-
-      html, body {
-        height: 100%;
-        font-family: "Consolas", "Courier New", monospace;
-        overflow: hidden;
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-ui-50: #fafafa;
+          --color-ui-100: #f4f4f5;
+          --color-ui-300: #a1a1aa;
+          --color-ui-400: #71717a;
+          --color-ui-950: #09090b;
+          --text: #f4f4f5;
+          --muted: #a1a1aa;
+          --body: #a1a1aa;
+          --hub: #f4f4f5;
+          --node: #71717a;
+          --logo: #52525b;
+          color-scheme: dark;
+        }
       }
-
+      * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         min-height: 100vh;
-        background: linear-gradient(135deg, #0d1f0d 0%, #1a2e1a 40%, #0f1f15 100%);
-        color: #e0e8d8;
+        background: var(--color-ui-950);
+        color: var(--text);
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      main {
         position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5rem;
+        max-width: 48rem;
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 2.5rem 1rem;
       }
+      .fade { opacity: 0; animation: fadeIn 1.2s ease-out forwards; }
+      .logo { width: 3rem; height: 3rem; color: var(--logo); }
+      .logo svg { width: 100%; height: 100%; }
+      .hub { fill: var(--hub); }
+      .node { fill: var(--node); }
+      h1 { font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; letter-spacing: -0.025em; }
+      @media (min-width: 640px) { h1 { font-size: 3rem; line-height: 1; } }
+      .tagline { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+      .lead { max-width: 42rem; font-size: 1.125rem; line-height: 1.75rem; color: var(--body); }
+      .soon { padding-top: 0.5rem; font-size: 0.875rem; font-weight: 500; color: var(--muted); }
 
-      /* Floating leaves with wind */
-      .leaves {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 1;
-        overflow: hidden;
-      }
-
+      .leaves { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
       .leaf {
-        position: absolute;
-        width: 40px;
-        height: 40px;
-        opacity: 0.15;
-        animation: drift 12s linear infinite;
-      }
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  opacity: 0.18;
+}
+.leaf:nth-child(1) { left: 5%;  animation: drift 14s linear infinite; }
+.leaf:nth-child(2) { left: 18%; animation: drift 16s linear infinite 2s; }
+.leaf:nth-child(3) { left: 32%; animation: drift 11s linear infinite 4s; }
+.leaf:nth-child(4) { left: 45%; animation: drift 15s linear infinite 1s; }
+.leaf:nth-child(5) { left: 58%; animation: drift 12s linear infinite 3s; }
+.leaf:nth-child(6) { left: 72%; animation: drift 17s linear infinite 5s; }
+.leaf:nth-child(7) { left: 88%; animation: drift 13s linear infinite 6s; }
+.leaf:nth-child(8) { left: 50%; animation: drift 18s linear infinite 7s; }
+.leaf:nth-child(9) { left: 25%; animation: drift 14s linear infinite 8s; }
+.leaf:nth-child(10) { left: 65%; animation: drift 15s linear infinite 9s; }
+.leaf-inner { animation: wind 2s ease-in-out infinite alternate; }
+.leaf:nth-child(2) .leaf-inner { animation-duration: 3s; }
+.leaf:nth-child(4) .leaf-inner { animation-duration: 1.5s; }
+.leaf:nth-child(6) .leaf-inner { animation-duration: 2.5s; }
+.leaf:nth-child(8) .leaf-inner { animation-duration: 3.5s; }
+.leaf:nth-child(10) .leaf-inner { animation-duration: 2s; }
+.leaf-inner svg { width: 100%; height: 100%; fill: var(--color-ui-300); }
 
-      .leaf-inner {
-        width: 100%;
-        height: 100%;
-        animation: wind 2s ease-in-out infinite alternate;
-      }
+@keyframes drift {
+  0% { top: 110%; }
+  100% { top: -10%; }
+}
+@keyframes wind {
+  0% { transform: translateX(-20px) rotate(-20deg); }
+  100% { transform: translateX(20px) rotate(20deg); }
+}
 
-      .leaf:nth-child(1) { left: 5%;  animation-delay: 0s;  animation-duration: 14s; }
-      .leaf:nth-child(2) { left: 18%; animation-delay: 2s;  animation-duration: 16s; }
-      .leaf:nth-child(3) { left: 32%; animation-delay: 4s;  animation-duration: 11s; }
-      .leaf:nth-child(4) { left: 45%; animation-delay: 1s;  animation-duration: 15s; }
-      .leaf:nth-child(5) { left: 58%; animation-delay: 3s;  animation-duration: 12s; }
-      .leaf:nth-child(6) { left: 72%; animation-delay: 5s;  animation-duration: 17s; }
-      .leaf:nth-child(7) { left: 88%; animation-delay: 6s;  animation-duration: 13s; }
-      .leaf:nth-child(8) { left: 50%; animation-delay: 7s;  animation-duration: 18s; }
-      .leaf:nth-child(9) { left: 25%; animation-delay: 8s;  animation-duration: 14s; }
-      .leaf:nth-child(10) { left: 65%; animation-delay: 9s;  animation-duration: 15s; }
+      .connection-lines {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+}
+.connection-lines svg {
+  width: 100%;
+  height: 100%;
+}
+.connection-lines line {
+  stroke: var(--color-ui-400);
+  stroke-width: 1.5;
+  animation: pulse-line 4s ease-in-out infinite;
+}
+.pulse-text {
+  color: var(--color-ui-400);
+  animation: pulse-line 4s ease-in-out infinite;
+}
+@keyframes pulse-line {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
 
-      .leaf-inner svg {
-        width: 100%;
-        height: 100%;
-        fill: #4a7c3a;
-      }
-
-      @keyframes drift {
-        0% { top: 110%; }
-        100% { top: -10%; }
-      }
-
-      @keyframes wind {
-        0% { transform: translateX(-25px) rotate(-20deg); }
-        100% { transform: translateX(25px) rotate(20deg); }
-      }
-
-      .leaf:nth-child(2) .leaf-inner { animation-duration: 3s; }
-      .leaf:nth-child(4) .leaf-inner { animation-duration: 1.5s; }
-      .leaf:nth-child(6) .leaf-inner { animation-duration: 2.5s; }
-      .leaf:nth-child(8) .leaf-inner { animation-duration: 3.5s; }
-      .leaf:nth-child(10) .leaf-inner { animation-duration: 2s; }
-
-      /* Connection lines (community/network) */
-      .connections {
-        position: fixed;
-        inset: 0;
-        z-index: 1;
-        pointer-events: none;
-        opacity: 0.08;
-      }
-
-      .connections svg {
-        width: 100%;
-        height: 100%;
-      }
-
-      .connections line {
-        stroke: #5a9e4a;
-        stroke-width: 1;
-        animation: pulse-line 4s ease-in-out infinite;
-      }
-
-      @keyframes pulse-line {
-        0%, 100% { opacity: 0.3; }
-        50% { opacity: 1; }
-      }
-
-      /* Main content */
-      .container {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        padding: 2rem;
-        max-width: 600px;
-      }
+/* Floating email link */
+.email-link {
+  position: fixed;
+  right: 20px;
+  bottom: 30px;
+  z-index: 20;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--color-ui-400);
+  text-decoration: none;
+  transition: color 0.3s;
+  animation: email-drift 20s ease-in-out infinite, email-pulse 4s ease-in-out infinite;
+}
+.email-link:hover {
+  color: var(--color-ui-50);
+}
+.email-label {
+  margin-right: 0.4em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+@keyframes email-drift {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-45px, -25px); }
+  25% { transform: translate(30px, -50px); }
+  40% { transform: translate(-20px, 40px); }
+  55% { transform: translate(50px, 20px); }
+  70% { transform: translate(-55px, -10px); }
+  85% { transform: translate(25px, 45px); }
+}
+@keyframes email-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+@media (max-width: 720px) {
+  .email-link {
+    right: auto;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: email-drift-mobile 14s ease-in-out infinite, email-pulse 4s ease-in-out infinite;
+  }
+  @keyframes email-drift-mobile {
+    0%, 100% { transform: translateX(-50%) translate(0, 0); }
+    25% { transform: translateX(-50%) translate(-20px, -8px); }
+    50% { transform: translateX(-50%) translate(18px, 6px); }
+    75% { transform: translateX(-50%) translate(-12px, 10px); }
+  }
+}
 
       /* Rotating graph */
-      .graph {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto 2rem;
-        opacity: 0;
-        animation: fadeIn 1.2s ease-out 0.3s forwards;
-      }
+.rotate-graph {
+  transform-origin: center;
+  animation: spin 20s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
-      .graph-rotate {
-        width: 100%;
-        height: 100%;
-        animation: rotate-graph 20s linear infinite;
-      }
-
-      .graph svg {
-        width: 100%;
-        height: 100%;
-      }
-
-      .graph .edge {
-        stroke: #4a7c3a;
-        stroke-width: 1.5;
-        opacity: 0.5;
-        animation: edge-pulse 4s ease-in-out infinite;
-      }
-
-      .graph .node {
-        fill: #8ab96a;
-        stroke: #4a7c3a;
-        stroke-width: 1;
-      }
-
-      .graph .node-center {
-        fill: #a8d88a;
-        stroke: #6a9e4a;
-        stroke-width: 1.5;
-      }
-
-      @keyframes rotate-graph {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-
-      @keyframes edge-pulse {
-        0%, 100% { opacity: 0.3; }
-        50% { opacity: 0.7; }
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      .title {
-        font-size: clamp(1.5rem, 5vw, 2.2rem);
-        font-weight: normal;
-        letter-spacing: 0.05em;
-        color: #c8d8b8;
-        opacity: 0;
-        animation: fadeIn 1.2s ease-out 0.6s forwards;
-      }
-
-      .subtitle {
-        margin-top: 0.75rem;
-        font-size: 0.875rem;
-        color: #6a7e5a;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        opacity: 0;
-        animation: fadeIn 1.2s ease-out 0.9s forwards;
-      }
-
-      .coming-soon {
-        display: inline-block;
-        margin-top: 2.5rem;
-        font-size: clamp(1.2rem, 4vw, 1.6rem);
-        color: #8ab96a;
-        letter-spacing: 0.08em;
-        white-space: nowrap;
-        overflow: hidden;
-        border-right: 2px solid #8ab96a;
-        width: 0;
-        opacity: 0;
-        animation: fadeIn 0.1s ease-out 1.2s forwards,
-                   type 2s steps(14, end) 1.3s forwards,
-                   blink 0.8s step-end infinite;
-      }
-
-      @keyframes type {
-        from { width: 0; }
-        to { width: 14ch; }
-      }
-
-      @keyframes blink {
-        50% { border-color: transparent; }
-      }
-
-      .footer {
-        margin-top: 3rem;
-        font-size: 0.7rem;
-        color: #3a5a2a;
-        letter-spacing: 0.05em;
-        opacity: 0;
-        animation: fadeIn 1.2s ease-out 2s forwards;
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+      @media (prefers-reduced-motion: reduce) {
+        .leaf, .leaf-inner, .connection-lines line, .pulse-text, .email-link, .rotate-graph { animation: none; }
+        .fade { animation: none; opacity: 1; }
       }
     </style>
   </head>
   <body>
-    <!-- Floating leaves with wind -->
     <div class="leaves">
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
-      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2 C8 6 6 12 12 22 C18 12 16 6 12 2 Z M12 2 L12 22"/></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
+      <div class="leaf"><div class="leaf-inner"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 12 12 22C18 12 16 6 12 2Z" /></svg></div></div>
     </div>
-
-    <!-- Connection lines (community network) -->
-    <div class="connections">
-      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none">
+    <div class="connection-lines">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" id="lines">
         <line x1="200" y1="200" x2="600" y2="400" />
         <line x1="600" y1="400" x2="1000" y2="300" />
         <line x1="1000" y1="300" x2="1400" y2="500" />
@@ -254,51 +225,75 @@
       </svg>
     </div>
 
-    <!-- Main content -->
-    <div class="container">
-      <!-- Rotating graph structure -->
-      <div class="graph">
-        <div class="graph-rotate">
+    <main>
+      <div class="fade" style="animation-delay: 0.3s">
+        <div class="logo rotate-graph">
           <svg viewBox="0 0 100 100">
-            <!-- Edges (connections between nodes) -->
-            <!-- Center to outer nodes -->
-            <line class="edge" x1="50" y1="50" x2="50" y2="10" />
-            <line class="edge" x1="50" y1="50" x2="85" y2="30" />
-            <line class="edge" x1="50" y1="50" x2="90" y2="65" />
-            <line class="edge" x1="50" y1="50" x2="70" y2="90" />
-            <line class="edge" x1="50" y1="50" x2="30" y2="90" />
-            <line class="edge" x1="50" y1="50" x2="10" y2="65" />
-            <line class="edge" x1="50" y1="50" x2="15" y2="30" />
-            <!-- Outer node to outer node (ring connections) -->
-            <line class="edge" x1="50" y1="10" x2="85" y2="30" />
-            <line class="edge" x1="85" y1="30" x2="90" y2="65" />
-            <line class="edge" x1="90" y1="65" x2="70" y2="90" />
-            <line class="edge" x1="70" y1="90" x2="30" y2="90" />
-            <line class="edge" x1="30" y1="90" x2="10" y2="65" />
-            <line class="edge" x1="10" y1="65" x2="15" y2="30" />
-            <line class="edge" x1="15" y1="30" x2="50" y2="10" />
-            <!-- Cross connections (community links) -->
-            <line class="edge" x1="50" y1="10" x2="70" y2="90" />
-            <line class="edge" x1="85" y1="30" x2="30" y2="90" />
-            <line class="edge" x1="90" y1="65" x2="15" y2="30" />
-            <line class="edge" x1="10" y1="65" x2="85" y2="30" />
-            <!-- Nodes -->
-            <circle class="node-center" cx="50" cy="50" r="5" />
-            <circle class="node" cx="50" cy="10" r="3.5" />
-            <circle class="node" cx="85" cy="30" r="3.5" />
-            <circle class="node" cx="90" cy="65" r="3.5" />
-            <circle class="node" cx="70" cy="90" r="3.5" />
-            <circle class="node" cx="30" cy="90" r="3.5" />
-            <circle class="node" cx="10" cy="65" r="3.5" />
-            <circle class="node" cx="15" cy="30" r="3.5" />
+          <line x1="50" y1="50" x2="50" y2="10" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+          <line x1="50" y1="50" x2="85" y2="30" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+          <line x1="50" y1="50" x2="90" y2="65" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+          <line x1="50" y1="50" x2="70" y2="90" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+          <line x1="50" y1="50" x2="30" y2="90" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+          <line x1="50" y1="50" x2="10" y2="65" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+          <line x1="50" y1="50" x2="15" y2="30" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+          <circle cx="50" cy="50" r="5" class="hub" />
+          <circle cx="50" cy="10" r="3.5" class="node" />
+          <circle cx="85" cy="30" r="3.5" class="node" />
+          <circle cx="90" cy="65" r="3.5" class="node" />
+          <circle cx="70" cy="90" r="3.5" class="node" />
+          <circle cx="30" cy="90" r="3.5" class="node" />
+          <circle cx="10" cy="65" r="3.5" class="node" />
+          <circle cx="15" cy="30" r="3.5" class="node" />
           </svg>
         </div>
       </div>
+      <h1 class="fade" style="animation-delay: 0.6s">TownsSquare</h1>
+      <p class="tagline fade" style="animation-delay: 0.9s">Community &middot; Sustainability &middot; Collaboration</p>
+      <p class="lead fade" style="animation-delay: 0.8s">
+        A neighbourhood toolkit for sharing and mutual aid. Borrow what you need, share what you don&apos;t, and help the people around you.
+      </p>
+      <p class="soon fade" style="animation-delay: 1.1s">Coming soon <span class="pulse-text">(probably not)</span></p>
+    </main>
 
-      <h1 class="title">TownsSquare</h1>
-      <p class="subtitle">Community &middot; Sustainability &middot; Collaboration</p>
-      <p class="coming-soon">Coming Soon</p>
-      <p class="footer">growing roots, building together</p>
-    </div>
+    <a href="mailto:tesquesquare@gmail.com" class="email-link"><span class="email-label">contact</span> tesquesquare@gmail.com</a>
+
+    <script>
+      (function () {
+        var W = 1920, H = 1080, NS = "http://www.w3.org/2000/svg";
+        var svg = document.getElementById("lines");
+        function between(a, b) { return a + Math.random() * (b - a); }
+        function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+        function polygon() {
+          var cx = between(W * 0.3, W * 0.7), cy = between(H * 0.3, H * 0.7);
+          var n = Math.floor(between(5, 9)), step = (Math.PI * 2) / n, start = between(0, Math.PI * 2);
+          var pts = [];
+          for (var i = 0; i < n; i++) {
+            var ang = start + i * step + between(-step / 3, step / 3), r = between(250, 650);
+            pts.push([clamp(cx + Math.cos(ang) * r * 1.4, 40, W - 40), clamp(cy + Math.sin(ang) * r * 0.8, 40, H - 40)]);
+          }
+          var out = [];
+          for (var j = 0; j < n; j++) out.push([pts[j], pts[(j + 1) % n]]);
+          var chords = Math.floor(between(1, 4));
+          for (var c = 0; c < chords; c++) {
+            var a = Math.floor(between(0, n)), b = (a + 2 + Math.floor(between(0, n - 3))) % n;
+            out.push([pts[a], pts[b]]);
+          }
+          return out;
+        }
+        function redraw() {
+          var segs = polygon();
+          while (svg.children.length > segs.length) svg.removeChild(svg.lastChild);
+          while (svg.children.length < segs.length) svg.appendChild(document.createElementNS(NS, "line"));
+          segs.forEach(function (s, i) {
+            var l = svg.children[i];
+            l.setAttribute("x1", s[0][0]); l.setAttribute("y1", s[0][1]);
+            l.setAttribute("x2", s[1][0]); l.setAttribute("y2", s[1][1]);
+          });
+        }
+        svg.addEventListener("animationiteration", function (e) {
+          if (e.target === svg.firstElementChild) redraw();
+        });
+      })();
+    </script>
   </body>
 </html>
