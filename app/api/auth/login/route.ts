@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
   });
 
   if (!res.ok) {
-    const data = await res.text();
     return NextResponse.json(
       { error: "Invalid email or password" },
       { status: res.status },

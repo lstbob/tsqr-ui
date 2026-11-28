@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 
 type Profile = {
@@ -114,7 +115,7 @@ export default function ProfilePage() {
         <div className="relative">
           <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-forest-800">
             {avatarSrc ? (
-              <img src={avatarSrc} alt="Avatar" className="h-full w-full object-cover" />
+              <Image src={avatarSrc} alt="Avatar" width={80} height={80} unoptimized className="h-full w-full object-cover" />
             ) : (
               <span className="text-2xl font-bold text-forest-200">{initial}</span>
             )}

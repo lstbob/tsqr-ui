@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, Donation } from "@lib/types";
 
 export default function DonationsPage() {
-  const [data, setData] = useState<{ items: any[] } | null>(null);
   const [events, setEvents] = useState<{ id: number; name: string }[]>([]);
-  const [loading, setLoading] = useState(true);
   const [eventId, setEventId] = useState("");
 
   useEffect(() => {
@@ -16,16 +16,10 @@ export default function DonationsPage() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (eventId) params.set("eventId", eventId);
-    params.set("pageSize", "50");
-    setLoading(true);
-    fetch(`/api/proxy/soup-kitchen/donations?${params}`)
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [eventId]);
+  const params = new URLSearchParams();
+  if (eventId) params.set("eventId", eventId);
+  params.set("pageSize", "50");
+  const { data, loading } = useFetchJson<PagedResult<Donation>>(`/api/proxy/soup-kitchen/donations?${params}`);
 
   return (
     <div>
@@ -58,7 +52,7 @@ export default function DonationsPage() {
               </tr>
             </thead>
             <tbody>
-              {data.items.map((d: any) => (
+              {data.items.map((d) => (
                 <tr key={d.id} className="border-t border-forest-700 hover:bg-forest-800">
                   <td className="px-4 py-2 font-medium text-forest-50">{d.donorName}</td>
                   <td className="px-4 py-2 text-forest-200">{d.item}</td>

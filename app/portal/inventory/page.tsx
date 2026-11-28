@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, InventoryItem } from "@lib/types";
 
 const statusOptions = [
   { value: "", label: "All Statuses" },
@@ -13,20 +15,12 @@ const statusOptions = [
 ];
 
 export default function InventoryPage() {
-  const [data, setData] = useState<{ items: any[] } | null>(null);
-  const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (status) params.set("status", status);
-    params.set("pageSize", "50");
-    setLoading(true);
-    fetch(`/api/proxy/inventory?${params}`)
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [status]);
+  const params = new URLSearchParams();
+  if (status) params.set("status", status);
+  params.set("pageSize", "50");
+  const { data, loading } = useFetchJson<PagedResult<InventoryItem>>(`/api/proxy/inventory?${params}`);
 
   return (
     <div>

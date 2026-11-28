@@ -1,19 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, Loan } from "@lib/types";
 
 export default function LoansPage() {
-  const [data, setData] = useState<{ items: any[] } | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    fetch("/api/proxy/loans?pageSize=50")
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, []);
+  const { data, loading } = useFetchJson<PagedResult<Loan>>("/api/proxy/loans?pageSize=50");
 
   return (
     <div>

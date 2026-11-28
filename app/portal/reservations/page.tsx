@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, Reservation } from "@lib/types";
 
 const statusOptions = [
   { value: "", label: "All Statuses" },
@@ -13,34 +15,23 @@ const statusOptions = [
 ];
 
 export default function ReservationsPage() {
-  const [data, setData] = useState<{ items: any[] } | null>(null);
-  const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
+  const [refresh, setRefresh] = useState(0);
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (status) params.set("status", status);
-    params.set("pageSize", "50");
-    setLoading(true);
-    fetch(`/api/proxy/reservations?${params}`)
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [status]);
+  const params = new URLSearchParams();
+  if (status) params.set("status", status);
+  params.set("pageSize", "50");
+  if (refresh) params.set("refresh", String(refresh));
+  const { data, loading } = useFetchJson<PagedResult<Reservation>>(`/api/proxy/reservations?${params}`);
 
-  async function postAction(endpoint: string, resId: number, label: string) {
+  async function postAction(endpoint: string, resId: number) {
     try {
       const res = await fetch(`/api/proxy/reservations/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ reservationId: resId }),
       });
-      if (res.ok) {
-        const params = new URLSearchParams();
-        if (status) params.set("status", status);
-        params.set("pageSize", "50");
-        fetch(`/api/proxy/reservations?${params}`).then((r) => r.json()).then(setData);
-      }
+      if (res.ok) setRefresh((n) => n + 1);
     } catch {}
   }
 
@@ -80,14 +71,14 @@ export default function ReservationsPage() {
                   }`}>{r.statusName}</span>
                   {r.statusName === "Pending" && (
                     <div className="flex gap-1">
-                      <button onClick={() => postAction("activate", r.id, "Activate")} className="rounded bg-blue-800 px-2 py-1 text-xs text-blue-100 hover:bg-blue-600">Activate</button>
-                      <button onClick={() => postAction("cancel", r.id, "Cancel")} className="rounded bg-red-800 px-2 py-1 text-xs text-red-100 hover:bg-red-600">Cancel</button>
+                      <button onClick={() => postAction("activate", r.id)} className="rounded bg-blue-800 px-2 py-1 text-xs text-blue-100 hover:bg-blue-600">Activate</button>
+                      <button onClick={() => postAction("cancel", r.id)} className="rounded bg-red-800 px-2 py-1 text-xs text-red-100 hover:bg-red-600">Cancel</button>
                     </div>
                   )}
                   {r.statusName === "Active" && (
                     <div className="flex gap-1">
-                      <button onClick={() => postAction("confirm-pickup", r.id, "Confirm")} className="rounded bg-green-800 px-2 py-1 text-xs text-green-100 hover:bg-green-600">Confirm Pickup</button>
-                      <button onClick={() => postAction("complete", r.id, "Complete")} className="rounded bg-forest-500 px-2 py-1 text-xs text-forest-950 hover:bg-forest-400">Complete</button>
+                      <button onClick={() => postAction("confirm-pickup", r.id)} className="rounded bg-green-800 px-2 py-1 text-xs text-green-100 hover:bg-green-600">Confirm Pickup</button>
+                      <button onClick={() => postAction("complete", r.id)} className="rounded bg-forest-500 px-2 py-1 text-xs text-forest-950 hover:bg-forest-400">Complete</button>
                     </div>
                   )}
                 </div>

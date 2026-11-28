@@ -14,7 +14,7 @@ const navItems = [
   { href: "/communities", label: "Communities" },
 ];
 
-export default function PortalNav({ role }: { role: string }) {
+export default function PortalNav({}: { role: string }) {
   const pathname = usePathname();
 
   return (

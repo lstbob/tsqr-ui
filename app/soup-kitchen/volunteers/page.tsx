@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, Volunteer } from "@lib/types";
 
 const roleOptions = [
   { value: "", label: "All Roles" },
@@ -14,9 +16,7 @@ const roleOptions = [
 ];
 
 export default function VolunteersPage() {
-  const [data, setData] = useState<{ items: any[] } | null>(null);
   const [events, setEvents] = useState<{ id: number; name: string }[]>([]);
-  const [loading, setLoading] = useState(true);
   const [eventId, setEventId] = useState("");
   const [role, setRole] = useState("");
 
@@ -27,17 +27,11 @@ export default function VolunteersPage() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (eventId) params.set("eventId", eventId);
-    if (role) params.set("role", role);
-    params.set("pageSize", "50");
-    setLoading(true);
-    fetch(`/api/proxy/soup-kitchen/volunteers?${params}`)
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [eventId, role]);
+  const params = new URLSearchParams();
+  if (eventId) params.set("eventId", eventId);
+  if (role) params.set("role", role);
+  params.set("pageSize", "50");
+  const { data, loading } = useFetchJson<PagedResult<Volunteer>>(`/api/proxy/soup-kitchen/volunteers?${params}`);
 
   return (
     <div>
@@ -73,7 +67,7 @@ export default function VolunteersPage() {
               </tr>
             </thead>
             <tbody>
-              {data.items.map((v: any) => (
+              {data.items.map((v) => (
                 <tr key={v.id} className="border-t border-forest-700 hover:bg-forest-800">
                   <td className="px-4 py-2 font-medium text-forest-50">{v.memberName}</td>
                   <td className="px-4 py-2 text-forest-200">{v.eventName}</td>

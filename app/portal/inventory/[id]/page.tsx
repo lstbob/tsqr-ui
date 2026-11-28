@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import type { InventoryItem } from "@lib/types";
 
 export default function InventoryManagePage() {
   const params = useParams();
   const id = params.id;
-  const [item, setItem] = useState<any>(null);
+  const [item, setItem] = useState<InventoryItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState("");
   const [error, setError] = useState("");

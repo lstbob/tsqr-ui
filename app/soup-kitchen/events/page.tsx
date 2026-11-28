@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, SoupEvent } from "@lib/types";
 
 const statusOptions = [
   { value: "", label: "All Statuses" },
@@ -12,20 +14,12 @@ const statusOptions = [
 ];
 
 export default function EventsPage() {
-  const [data, setData] = useState<{ items: any[] } | null>(null);
-  const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (status) params.set("status", status);
-    params.set("pageSize", "50");
-    setLoading(true);
-    fetch(`/api/proxy/soup-kitchen/events?${params}`)
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [status]);
+  const params = new URLSearchParams();
+  if (status) params.set("status", status);
+  params.set("pageSize", "50");
+  const { data, loading } = useFetchJson<PagedResult<SoupEvent>>(`/api/proxy/soup-kitchen/events?${params}`);
 
   return (
     <div>
@@ -46,7 +40,7 @@ export default function EventsPage() {
         <p className="py-12 text-center text-forest-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {data.items.map((event: any) => (
+          {data.items.map((event) => (
             <Link
               key={event.id}
               href={`/soup-kitchen/events/${event.id}`}

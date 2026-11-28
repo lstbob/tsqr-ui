@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, Member } from "@lib/types";
 
 const memberStatusOptions = [
   { value: "", label: "All Statuses" },
@@ -11,23 +13,15 @@ const memberStatusOptions = [
 ];
 
 export default function MembersPage() {
-  const [data, setData] = useState<{ items: any[]; totalCount: number; page: number; pageSize: number } | null>(null);
-  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (search) params.set("search", search);
-    if (status) params.set("status", status);
-    params.set("page", String(page));
-    setLoading(true);
-    fetch(`/api/proxy/members?${params}`)
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [search, status, page]);
+  const params = new URLSearchParams();
+  if (search) params.set("search", search);
+  if (status) params.set("status", status);
+  params.set("page", String(page));
+  const { data, loading } = useFetchJson<PagedResult<Member>>(`/api/proxy/members?${params}`);
 
   return (
     <div>

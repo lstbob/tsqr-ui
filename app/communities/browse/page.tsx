@@ -1,17 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-
-interface Community {
-  id: number;
-  name: string;
-  neighbourhood: string;
-  city: string;
-  country: string;
-  status: number;
-  statusName: string;
-}
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, Community } from "@lib/types";
 
 function statusBadgeClass(statusName: string) {
   switch (statusName) {
@@ -29,22 +21,14 @@ function statusBadgeClass(statusName: string) {
 }
 
 export default function BrowseCommunitiesPage() {
-  const [data, setData] = useState<{ items: Community[] } | null>(null);
-  const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (country) params.set("country", country);
-    if (city) params.set("city", city);
-    params.set("pageSize", "50");
-    setLoading(true);
-    fetch(`/api/proxy/communities?${params}`)
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [country, city]);
+  const params = new URLSearchParams();
+  if (country) params.set("country", country);
+  if (city) params.set("city", city);
+  params.set("pageSize", "50");
+  const { data, loading } = useFetchJson<PagedResult<Community>>(`/api/proxy/communities?${params}`);
 
   return (
     <div>

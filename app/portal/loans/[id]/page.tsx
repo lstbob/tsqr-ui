@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import type { Loan } from "@lib/types";
 
 export default function LoanDetailPage() {
   const params = useParams();
   const id = params.id;
-  const [item, setItem] = useState<any>(null);
+  const [item, setItem] = useState<Loan | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [result, setResult] = useState("");

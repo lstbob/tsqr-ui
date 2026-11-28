@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useFetchJson } from "@lib/useFetchJson";
+import type { PagedResult, Meal } from "@lib/types";
 
 const categoryOptions = [
   { value: "", label: "All Categories" },
@@ -14,9 +16,7 @@ const categoryOptions = [
 ];
 
 export default function MealsPage() {
-  const [data, setData] = useState<{ items: any[] } | null>(null);
   const [events, setEvents] = useState<{ id: number; name: string }[]>([]);
-  const [loading, setLoading] = useState(true);
   const [eventId, setEventId] = useState("");
   const [category, setCategory] = useState("");
 
@@ -27,17 +27,11 @@ export default function MealsPage() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (eventId) params.set("eventId", eventId);
-    if (category) params.set("category", category);
-    params.set("pageSize", "50");
-    setLoading(true);
-    fetch(`/api/proxy/soup-kitchen/meals?${params}`)
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [eventId, category]);
+  const params = new URLSearchParams();
+  if (eventId) params.set("eventId", eventId);
+  if (category) params.set("category", category);
+  params.set("pageSize", "50");
+  const { data, loading } = useFetchJson<PagedResult<Meal>>(`/api/proxy/soup-kitchen/meals?${params}`);
 
   return (
     <div>
@@ -62,7 +56,7 @@ export default function MealsPage() {
         <p className="py-12 text-center text-forest-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
         <div className="space-y-3">
-          {data.items.map((meal: any) => (
+          {data.items.map((meal) => (
             <div key={meal.id} className="rounded-lg border border-forest-700 bg-forest-900 p-4 shadow-sm shadow-black/20">
               <div className="flex items-start justify-between">
                 <div>

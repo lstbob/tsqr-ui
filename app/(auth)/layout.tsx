@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Leaves, ConnectionLines } from "../_components/decorations";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -7,7 +8,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <ConnectionLines />
       <div className="relative z-10 w-full max-w-md">
         <div className="mb-8 text-center">
-          <a href="/" className="text-2xl font-bold text-forest-50">TownsSquare</a>
+          <Link href="/" className="text-2xl font-bold text-forest-50">TownsSquare</Link>
         </div>
         {children}
       </div>

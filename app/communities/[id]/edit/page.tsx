@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import type { Community } from "@lib/types";
 
 export default function EditCommunityPage({ params }: { params: Promise<{ id: string }> }) {
   return <EditCommunityForm id={params} />;
@@ -13,7 +14,7 @@ function EditCommunityForm({ id }: { id: Promise<{ id: string }> }) {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
-  const [community, setCommunity] = useState<any>(null);
+  const [community, setCommunity] = useState<Community | null>(null);
 
   useEffect(() => {
     id.then(async ({ id: resolvedId }) => {
