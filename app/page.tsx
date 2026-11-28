@@ -46,7 +46,7 @@ export default function LandingPage() {
             className="pt-2 text-sm font-medium text-zinc-500 dark:text-zinc-400"
             style={{ animation: "fadeIn 1.2s ease-out 1.1s forwards", opacity: 0 }}
           >
-            Coming soon (probably not)
+            Coming soon <span className="pulse-text">(probably not)</span>
           </p>
         </section>
       </main>
