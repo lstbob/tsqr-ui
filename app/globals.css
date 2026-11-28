@@ -93,7 +93,12 @@ body {
 .connection-lines line {
   stroke: var(--color-ui-400);
   stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
   animation: pulse-line 4s ease-in-out infinite;
+}
+@media (max-width: 720px) {
+  .connection-lines { opacity: 0.35; }
+  .connection-lines line { stroke-width: 1.25; }
 }
 .pulse-text {
   color: var(--color-ui-400);
