@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TownsSquare — Community Tool Sharing",
-  description: "A community-powered portal for tool sharing, sustainability, and collaboration.",
+  title: "TownsSquare — Neighbourhood sharing and mutual aid",
+  description: "A neighbourhood toolkit for sharing tools, running community kitchens and organising mutual aid.",
 };
 
 export default function RootLayout({
