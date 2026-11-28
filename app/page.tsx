@@ -50,6 +50,9 @@ export default function LandingPage() {
           </p>
         </section>
       </main>
+      <a href="mailto:tesquesquare@gmail.com" className="email-link">
+        <span className="email-label">contact</span> tesquesquare@gmail.com
+      </a>
     </div>
   );
 }
