@@ -3,14 +3,32 @@ import { getGatewayUrl, SUPPORT_URL } from "@lib/config";
 
 export const dynamic = "force-dynamic";
 
-async function getStats() {
+interface CommunityStats {
+  totalCommunities: number;
+  active: number;
+}
+
+interface PlatformStats {
+  totalTools: number;
+  totalMembers: number;
+}
+
+async function fetchStats<T>(path: string): Promise<T | null> {
   try {
-    const res = await fetch(`${getGatewayUrl()}/api/dashboard/stats`, { cache: "no-store" });
+    const res = await fetch(`${getGatewayUrl()}${path}`, { cache: "no-store" });
     if (!res.ok) return null;
-    return res.json();
+    return (await res.json()) as T;
   } catch {
     return null;
   }
+}
+
+async function getStats() {
+  const [communities, platform] = await Promise.all([
+    fetchStats<CommunityStats>("/api/communities/dashboard/stats"),
+    fetchStats<PlatformStats>("/api/dashboard/stats"),
+  ]);
+  return { communities, platform };
 }
 
 function Leaves() {
@@ -43,147 +61,209 @@ function ConnectionLines() {
   );
 }
 
+const navLinkClass =
+  "text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100";
+const primaryButtonClass =
+  "rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300";
+const secondaryButtonClass =
+  "rounded-lg border border-zinc-300 px-5 py-2.5 text-sm font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800";
+const cardClass =
+  "rounded-xl border border-zinc-200 p-5 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600";
+const mutedClass = "text-zinc-600 dark:text-zinc-400";
+
+const areas = [
+  {
+    href: "/communities",
+    title: "Community Hub",
+    text: "Find your neighbourhood on the map, join a community, or start a new one.",
+  },
+  {
+    href: "/tools",
+    title: "Tool Library",
+    text: "Borrow drills, ladders and garden tools from your neighbours instead of buying them.",
+  },
+  {
+    href: "/soup-kitchen",
+    title: "Soup Kitchen",
+    text: "Plan meal events, register guests, sign up to volunteer and record donations.",
+  },
+];
+
+const pillars = [
+  {
+    title: "Sustainability",
+    text: "Reduce waste by sharing instead of buying. Every item borrowed is one less item made, shipped and thrown away.",
+  },
+  {
+    title: "Community",
+    text: "Connect with neighbors through shared resources. Build trust, foster collaboration, and strengthen local networks.",
+  },
+  {
+    title: "Collaboration",
+    text: "Organise mutual aid together, from community kitchens to garden days. See what is available and who can help.",
+  },
+];
+
+const steps = [
+  { title: "Join", text: "Create an account and join the community where you live." },
+  { title: "Take part", text: "Borrow and lend tools, volunteer at a kitchen, or register for a meal." },
+  { title: "Give back", text: "Return what you borrowed, share what you have, and help the next neighbour." },
+];
+
 export default async function LandingPage() {
-  const stats = await getStats();
+  const { communities, platform } = await getStats();
+  const hasStats = communities !== null || platform !== null;
 
   return (
-    <div className="relative">
+    <div className="landing relative min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       <Leaves />
       <ConnectionLines />
 
-      {/* Hero */}
-      <section className="relative z-10 overflow-hidden bg-gradient-to-br from-forest-950 via-forest-900 to-forest-950 text-forest-50">
-        <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28 lg:py-32">
-          <div className="max-w-3xl">
-            <div className="mb-8 flex items-center gap-3" style={{animation: "fadeIn 1.2s ease-out 0.3s forwards", opacity: 0}}>
-              <div className="h-16 w-16" style={{animation: "spin 20s linear infinite"}}>
-                <svg viewBox="0 0 100 100">
-                  <line className="edge" x1="50" y1="50" x2="50" y2="10" stroke="#4a7c3a" strokeWidth="1.5" opacity="0.5" />
-                  <line className="edge" x1="50" y1="50" x2="85" y2="30" stroke="#4a7c3a" strokeWidth="1.5" opacity="0.5" />
-                  <line className="edge" x1="50" y1="50" x2="90" y2="65" stroke="#4a7c3a" strokeWidth="1.5" opacity="0.5" />
-                  <line className="edge" x1="50" y1="50" x2="70" y2="90" stroke="#4a7c3a" strokeWidth="1.5" opacity="0.5" />
-                  <line className="edge" x1="50" y1="50" x2="30" y2="90" stroke="#4a7c3a" strokeWidth="1.5" opacity="0.5" />
-                  <line className="edge" x1="50" y1="50" x2="10" y2="65" stroke="#4a7c3a" strokeWidth="1.5" opacity="0.5" />
-                  <line className="edge" x1="50" y1="50" x2="15" y2="30" stroke="#4a7c3a" strokeWidth="1.5" opacity="0.5" />
-                  <circle cx="50" cy="50" r="5" fill="#a8d88a" stroke="#6a9e4a" strokeWidth="1.5" />
-                  <circle cx="50" cy="10" r="3.5" fill="#8ab96a" stroke="#4a7c3a" strokeWidth="1" />
-                  <circle cx="85" cy="30" r="3.5" fill="#8ab96a" stroke="#4a7c3a" strokeWidth="1" />
-                  <circle cx="90" cy="65" r="3.5" fill="#8ab96a" stroke="#4a7c3a" strokeWidth="1" />
-                  <circle cx="70" cy="90" r="3.5" fill="#8ab96a" stroke="#4a7c3a" strokeWidth="1" />
-                  <circle cx="30" cy="90" r="3.5" fill="#8ab96a" stroke="#4a7c3a" strokeWidth="1" />
-                  <circle cx="10" cy="65" r="3.5" fill="#8ab96a" stroke="#4a7c3a" strokeWidth="1" />
-                  <circle cx="15" cy="30" r="3.5" fill="#8ab96a" stroke="#4a7c3a" strokeWidth="1" />
-                </svg>
-              </div>
-            </div>
-            <h1 className="text-5xl font-bold tracking-tight sm:text-6xl text-forest-50" style={{animation: "fadeIn 1.2s ease-out 0.6s forwards", opacity: 0}}>
-              TownsSquare
-            </h1>
-            <p className="mt-2 text-sm uppercase tracking-[0.1em] text-forest-600" style={{animation: "fadeIn 1.2s ease-out 0.9s forwards", opacity: 0}}>
-              Community &middot; Sustainability &middot; Collaboration
-            </p>
-            <p className="mt-4 text-xl text-forest-200" style={{animation: "fadeIn 1.2s ease-out 0.8s forwards", opacity: 0}}>
-              Community-powered tool sharing for a more sustainable tomorrow.
-              Borrow what you need, share what you have.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4" style={{animation: "fadeIn 1.2s ease-out 1.1s forwards", opacity: 0}}>
-              <Link
-                href="/portal/tools"
-                className="rounded-lg bg-forest-500 px-6 py-3 text-sm font-semibold text-forest-950 shadow-lg shadow-black/30 transition hover:bg-forest-400"
-              >
-                Explore the Tool Library
-              </Link>
-              <Link
-                href="/login"
-                className="rounded-lg border border-forest-600/50 px-6 py-3 text-sm font-semibold text-forest-100 transition hover:bg-forest-800/50"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/register"
-                className="rounded-lg border border-forest-600/50 px-6 py-3 text-sm font-semibold text-forest-100 transition hover:bg-forest-800/50"
-              >
-                Create Account
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Header */}
+      <header className="relative z-10 border-b border-zinc-200 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/80">
+        <nav className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
+          <Link href="/" className="text-lg font-semibold tracking-tight">
+            TownsSquare
+          </Link>
+          <ul className="flex flex-wrap items-center justify-end gap-x-6 gap-y-2 text-sm">
+            <li>
+              <Link href="/communities" className={navLinkClass}>Communities</Link>
+            </li>
+            <li>
+              <Link href="/tools" className={navLinkClass}>Tool Library</Link>
+            </li>
+            <li>
+              <Link href="/soup-kitchen" className={navLinkClass}>Soup Kitchen</Link>
+            </li>
+            <li>
+              <Link href="/login" className={navLinkClass}>Sign in</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
 
-      {/* Stats */}
-      {stats && (
-        <section className="relative z-10 border-t border-forest-800 bg-forest-950 py-12">
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 md:grid-cols-5">
-            <Stat value={stats.totalTools} label="Tools Available" />
-            <Stat value={stats.totalMembers} label="Community Members" />
-            <Stat value={stats.activeLoans} label="Active Loans" />
-            <Stat value={stats.underMaintenance} label="In Maintenance" />
-            <Stat value={stats.pendingReservations} label="Pending Reservations" />
+      <main className="relative z-10 mx-auto flex max-w-3xl flex-col gap-16 px-4 py-10">
+        {/* Hero */}
+        <section className="flex flex-col gap-6 pt-8">
+          <div
+            className="rotate-graph h-12 w-12 text-zinc-400 dark:text-zinc-600"
+            style={{ animation: "fadeIn 1.2s ease-out 0.3s forwards", opacity: 0 }}
+          >
+            <svg viewBox="0 0 100 100">
+              <line className="edge" x1="50" y1="50" x2="50" y2="10" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+              <line className="edge" x1="50" y1="50" x2="85" y2="30" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+              <line className="edge" x1="50" y1="50" x2="90" y2="65" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+              <line className="edge" x1="50" y1="50" x2="70" y2="90" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+              <line className="edge" x1="50" y1="50" x2="30" y2="90" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+              <line className="edge" x1="50" y1="50" x2="10" y2="65" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+              <line className="edge" x1="50" y1="50" x2="15" y2="30" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+              <circle cx="50" cy="50" r="5" className="fill-zinc-900 dark:fill-zinc-100" />
+              <circle cx="50" cy="10" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+              <circle cx="85" cy="30" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+              <circle cx="90" cy="65" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+              <circle cx="70" cy="90" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+              <circle cx="30" cy="90" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+              <circle cx="10" cy="65" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+              <circle cx="15" cy="30" r="3.5" className="fill-zinc-400 dark:fill-zinc-500" />
+            </svg>
+          </div>
+          <h1
+            className="text-4xl font-bold tracking-tight sm:text-5xl"
+            style={{ animation: "fadeIn 1.2s ease-out 0.6s forwards", opacity: 0 }}
+          >
+            TownsSquare
+          </h1>
+          <p
+            className="text-xs font-medium uppercase tracking-[0.1em] text-zinc-500 dark:text-zinc-400"
+            style={{ animation: "fadeIn 1.2s ease-out 0.9s forwards", opacity: 0 }}
+          >
+            Community &middot; Sustainability &middot; Collaboration
+          </p>
+          <p
+            className="max-w-2xl text-lg text-zinc-600 dark:text-zinc-400"
+            style={{ animation: "fadeIn 1.2s ease-out 0.8s forwards", opacity: 0 }}
+          >
+            A neighbourhood toolkit for sharing and mutual aid. Borrow what you need, share what you have, and help the people around you.
+          </p>
+          <div
+            className="flex flex-wrap gap-4 pt-2"
+            style={{ animation: "fadeIn 1.2s ease-out 1.1s forwards", opacity: 0 }}
+          >
+            <Link href="/register" className={primaryButtonClass}>Create account</Link>
+            <Link href="/login" className={secondaryButtonClass}>Sign in</Link>
           </div>
         </section>
-      )}
 
-      {/* Features */}
-      <section className="relative z-10 border-t border-forest-800 bg-forest-900 py-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-3xl font-bold text-forest-50">Building stronger communities together</h2>
-          <p className="mt-2 text-lg text-forest-200">
-            Three pillars that make TownsSquare more than just a tool library.
-          </p>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            <FeatureCard
-              icon="🌱"
-              title="Sustainability"
-              description="Reduce waste by sharing instead of buying. Every tool borrowed is one less tool manufactured, shipped, and eventually discarded."
-            />
-            <FeatureCard
-              icon="🤝"
-              title="Community"
-              description="Connect with neighbors through shared resources. Build trust, foster collaboration, and strengthen local networks."
-            />
-            <FeatureCard
-              icon="🔧"
-              title="Collaboration"
-              description="Access the right tool for any job — from DIY projects to community gardens. Track availability and reserve tools online."
-            />
+        {/* Stats */}
+        {hasStats && (
+          <section className="grid grid-cols-2 gap-6 border-y border-zinc-200 py-8 sm:grid-cols-4 dark:border-zinc-800">
+            {communities && <Stat value={communities.totalCommunities} label="Communities" />}
+            {communities && <Stat value={communities.active} label="Active communities" />}
+            {platform && <Stat value={platform.totalTools} label="Shared tools" />}
+            {platform && <Stat value={platform.totalMembers} label="Verified members" />}
+          </section>
+        )}
+
+        {/* Areas */}
+        <section className="flex flex-col gap-4">
+          <h2 className="text-xl font-semibold tracking-tight">What you can do</h2>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {areas.map((area) => (
+              <Link key={area.href} href={area.href} className={cardClass}>
+                <h3 className="font-semibold">{area.title}</h3>
+                <p className={`mt-1 text-sm ${mutedClass}`}>{area.text}</p>
+              </Link>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* How it works */}
-      <section className="relative z-10 border-t border-forest-800 bg-forest-950 py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <h2 className="text-3xl font-bold text-forest-50">How it works</h2>
-          <div className="mt-12 grid gap-8 sm:grid-cols-3">
-            <Step step="1" title="Browse" description="Search the catalog of available tools across all community locations." />
-            <Step step="2" title="Reserve" description="Reserve a tool online and join the waitlist if it's currently loaned out." />
-            <Step step="3" title="Pick up & return" description="Confirm pickup, use the tool, and return it when done — it's that simple." />
+        {/* Pillars */}
+        <section className="flex flex-col gap-4">
+          <h2 className="text-xl font-semibold tracking-tight">Building stronger communities together</h2>
+          <p className={mutedClass}>Three pillars that make TownsSquare more than a single service.</p>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {pillars.map((pillar) => (
+              <div key={pillar.title}>
+                <h3 className="font-semibold">{pillar.title}</h3>
+                <p className={`mt-1 text-sm ${mutedClass}`}>{pillar.text}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA */}
-      <section className="relative z-10 border-t border-forest-800 bg-forest-900 py-20 text-forest-50">
-        <div className="mx-auto max-w-3xl px-4 text-center">
-          <h2 className="text-3xl font-bold">Ready to join the community?</h2>
-          <p className="mt-3 text-forest-200">
-            Create an account and start borrowing tools today.
-          </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <Link href="/register" className="rounded-lg bg-forest-500 px-6 py-3 text-sm font-semibold text-forest-950 shadow-lg shadow-black/30 transition hover:bg-forest-400">
-              Get Started
-            </Link>
-            <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-forest-600/50 px-6 py-3 text-sm font-semibold text-forest-100 transition hover:bg-forest-800/50">
+        {/* How it works */}
+        <section className="flex flex-col gap-4">
+          <h2 className="text-xl font-semibold tracking-tight">How it works</h2>
+          <ol className="grid gap-6 sm:grid-cols-3">
+            {steps.map((step, i) => (
+              <li key={step.title}>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-300 text-sm font-medium tabular-nums dark:border-zinc-700">
+                  {i + 1}
+                </div>
+                <h3 className="mt-3 font-semibold">{step.title}</h3>
+                <p className={`mt-1 text-sm ${mutedClass}`}>{step.text}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* CTA */}
+        <section className="flex flex-col gap-4 rounded-xl border border-zinc-200 p-6 dark:border-zinc-800">
+          <h2 className="text-xl font-semibold tracking-tight">Ready to join your neighbours?</h2>
+          <p className={mutedClass}>Create an account and find your community.</p>
+          <div className="flex flex-wrap gap-4 pt-2">
+            <Link href="/register" className={primaryButtonClass}>Get started</Link>
+            <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" className={secondaryButtonClass}>
               Support Portal
             </a>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-forest-800 bg-forest-950 py-8">
-        <div className="mx-auto max-w-6xl px-4 text-center text-sm text-forest-600">
-          <p>&copy; 2026 TownsSquare. A community tool sharing platform.</p>
+      <footer className="relative z-10 mt-16 border-t border-zinc-200 py-8 text-sm text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
+        <div className="mx-auto max-w-3xl px-4">
+          <p>&copy; {new Date().getFullYear()} TownsSquare. A neighbourhood toolkit for sharing and mutual aid.</p>
         </div>
       </footer>
     </div>
@@ -192,31 +272,9 @@ export default async function LandingPage() {
 
 function Stat({ value, label }: { value: number; label: string }) {
   return (
-    <div className="text-center">
-      <p className="text-3xl font-bold text-forest-50">{value}</p>
-      <p className="mt-1 text-xs font-medium text-forest-400">{label}</p>
-    </div>
-  );
-}
-
-function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
-  return (
-    <div className="rounded-lg border border-forest-700 bg-forest-900 p-6 shadow-sm shadow-black/20">
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-forest-800 text-3xl">{icon}</div>
-      <h3 className="mt-4 text-xl font-semibold text-forest-50">{title}</h3>
-      <p className="mt-2 text-forest-200">{description}</p>
-    </div>
-  );
-}
-
-function Step({ step, title, description }: { step: string; title: string; description: string }) {
-  return (
     <div>
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-forest-800 text-lg font-bold text-forest-300">
-        {step}
-      </div>
-      <h3 className="mt-4 font-semibold text-forest-50">{title}</h3>
-      <p className="mt-1 text-sm text-forest-200">{description}</p>
+      <p className="text-2xl font-semibold tracking-tight tabular-nums">{value}</p>
+      <p className="text-sm text-zinc-500 dark:text-zinc-400">{label}</p>
     </div>
   );
 }
