@@ -2,7 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import ToolCard from "../_components/ToolCard";
+import Link from "next/link";
 import SearchBar from "../_components/SearchBar";
 import FilterDropdown from "../_components/FilterDropdown";
 import Pagination from "../_components/Pagination";
@@ -40,6 +40,14 @@ const toolTypeOptions = [
   { value: "6", label: "Other" },
 ];
 
+const typeColors: Record<string, string> = {
+  "Hand Tool": "bg-blue-900/40 text-blue-300",
+  "Power Tool": "bg-amber-900/40 text-amber-300",
+  "Gardening Tool": "bg-green-900/40 text-green-300",
+  "Construction Tool": "bg-purple-900/40 text-purple-300",
+  "Specialty Tool": "bg-rose-900/40 text-rose-300",
+};
+
 function ToolsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -51,40 +59,34 @@ function ToolsContent() {
 
   const [data, setData] = useState<PagedResult | null>(null);
   const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
-  const [loadedKey, setLoadedKey] = useState<string | null>(null);
-  const requestKey = `${q}|${type}|${manufacturerId}|${page}`;
-  const loading = data === null || loadedKey !== requestKey;
+  const [loading, setLoading] = useState(true);
+
+  const queryKey = `${q}|${type}|${manufacturerId}|${page}`;
+  const [prevQueryKey, setPrevQueryKey] = useState(queryKey);
+  if (queryKey !== prevQueryKey) {
+    setPrevQueryKey(queryKey);
+    setLoading(true);
+  }
 
   useEffect(() => {
-    fetch("/api/manufacturers")
+    fetch("/api/proxy/manufacturers")
       .then((r) => r.json())
       .then(setManufacturers)
       .catch(() => {});
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (type) params.set("type", type);
     if (manufacturerId) params.set("manufacturerId", manufacturerId);
     params.set("page", String(page));
 
-    fetch(`/api/tools?${params.toString()}`)
+    fetch(`/api/proxy/tools?${params.toString()}`)
       .then((r) => r.json())
-      .then((d) => {
-        if (cancelled) return;
-        setData(d);
-        setLoadedKey(requestKey);
-      })
-      .catch(() => {
-        if (!cancelled) setLoadedKey(requestKey);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [q, type, manufacturerId, page, requestKey]);
+      .then((d) => { setData(d); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, [q, type, manufacturerId, page]);
 
   const setParam = useCallback(
     (key: string, value: string) => {
@@ -99,18 +101,18 @@ function ToolsContent() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900">Tool Library</h1>
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-forest-50">Tool Library</h1>
+        <Link href="/tools/register" className="rounded-lg bg-forest-500 px-4 py-2 text-sm font-semibold text-forest-950 transition hover:bg-forest-400">
+          Register Tool
+        </Link>
+      </div>
 
       <div className="mb-6 flex flex-col gap-3 sm:flex-row">
         <div className="flex-1">
           <SearchBar value={q} onChange={(v) => setParam("q", v)} placeholder="Search tools..." />
         </div>
-        <FilterDropdown
-          value={type}
-          onChange={(v) => setParam("type", v)}
-          options={toolTypeOptions}
-          placeholder="All Types"
-        />
+        <FilterDropdown value={type} onChange={(v) => setParam("type", v)} options={toolTypeOptions} placeholder="All Types" />
         <FilterDropdown
           value={manufacturerId}
           onChange={(v) => setParam("manufacturerId", v)}
@@ -120,20 +122,28 @@ function ToolsContent() {
       </div>
 
       {loading ? (
-        <p className="py-12 text-center text-zinc-400">Loading...</p>
+        <p className="py-12 text-center text-forest-400">Loading...</p>
       ) : data && data.items.length > 0 ? (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.items.map((tool) => (
-              <ToolCard
+              <Link
                 key={tool.id}
-                id={tool.id}
-                model={tool.model}
-                description={tool.description}
-                manufacturerName={tool.manufacturerName}
-                toolTypeName={tool.toolTypeName}
-                amortizationRateName={tool.amortizationRateName}
-              />
+                href={`/tools/${tool.id}`}
+                className="block rounded-lg border border-forest-700 bg-forest-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-forest-500"
+              >
+                <div className="mb-2 flex items-start justify-between gap-2">
+                  <h3 className="font-semibold text-forest-50 truncate">{tool.model}</h3>
+                  <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${typeColors[tool.toolTypeName] ?? "bg-forest-800 text-forest-100"}`}>
+                    {tool.toolTypeName}
+                  </span>
+                </div>
+                <p className="mb-3 line-clamp-2 text-sm text-forest-200">{tool.description}</p>
+                <div className="flex items-center justify-between text-xs text-forest-400">
+                  <span>{tool.manufacturerName}</span>
+                  <span>{tool.amortizationRateName} amortization</span>
+                </div>
+              </Link>
             ))}
           </div>
           <Pagination
@@ -144,7 +154,7 @@ function ToolsContent() {
           />
         </>
       ) : (
-        <p className="py-12 text-center text-zinc-400">No tools found.</p>
+        <p className="py-12 text-center text-forest-400">No tools found.</p>
       )}
     </div>
   );
@@ -152,7 +162,7 @@ function ToolsContent() {
 
 export default function ToolsPage() {
   return (
-    <Suspense fallback={<p className="py-12 text-center text-zinc-400">Loading...</p>}>
+    <Suspense fallback={<p className="py-12 text-center text-forest-400">Loading...</p>}>
       <ToolsContent />
     </Suspense>
   );

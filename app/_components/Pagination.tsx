@@ -17,17 +17,17 @@ export default function Pagination({ page, pageSize, totalCount, onPageChange }:
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page <= 1}
-        className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-lg border border-forest-700 px-3 py-1.5 text-sm font-medium text-forest-200 transition hover:bg-forest-800 disabled:cursor-not-allowed disabled:opacity-40"
       >
         Previous
       </button>
-      <span className="text-sm text-zinc-500">
+      <span className="text-sm text-forest-400">
         Page {page} of {totalPages}
       </span>
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page >= totalPages}
-        className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-lg border border-forest-700 px-3 py-1.5 text-sm font-medium text-forest-200 transition hover:bg-forest-800 disabled:cursor-not-allowed disabled:opacity-40"
       >
         Next
       </button>
