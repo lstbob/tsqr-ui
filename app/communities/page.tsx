@@ -1,4 +1,4 @@
-import Link from "next/link";
+import ModuleCard from "../_components/ModuleCard";
 
 export default function CommunitiesHome() {
   return (
@@ -10,19 +10,9 @@ export default function CommunitiesHome() {
 
       <h2 className="mb-4 text-lg font-semibold text-ui-100">Quick Access</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <ModuleCard href="/communities/browse" title="Browse Communities" description="Search and explore communities by country and city." icon="🌍" />
-        <ModuleCard href="/communities/quick-register" title="Quick Register" description="Register a new community for admin approval." icon="📝" />
+        <ModuleCard href="/communities/browse" title="Browse Communities" description="Search and explore communities by country and city." />
+        <ModuleCard href="/communities/quick-register" title="Quick Register" description="Register a new community for admin approval." />
       </div>
     </div>
-  );
-}
-
-function ModuleCard({ href, title, description, icon }: { href: string; title: string; description: string; icon: string }) {
-  return (
-    <Link href={href} className="rounded-lg border border-ui-700 bg-ui-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-ui-500">
-      <span className="text-2xl">{icon}</span>
-      <h3 className="mt-2 font-semibold text-ui-50">{title}</h3>
-      <p className="mt-1 text-sm text-ui-200">{description}</p>
-    </Link>
   );
 }

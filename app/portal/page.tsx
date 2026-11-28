@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { cookies } from "next/headers";
 import { getGatewayUrl, ACCESS_TOKEN_COOKIE } from "@lib/config";
+import ModuleCard from "../_components/ModuleCard";
 
 async function getDashboard() {
   const cookieStore = await cookies();
@@ -72,13 +72,13 @@ export default async function PortalHome() {
 
       <h2 className="mb-4 text-lg font-semibold text-ui-100">Quick Access</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <ModuleCard href="/tools" title="Tool Library" description="Browse, search, and manage the tool catalog." icon="🔧" />
-        <ModuleCard href="/portal/members" title="Members" description="Manage registrations, verification, and membership status." icon="👥" />
-        <ModuleCard href="/portal/reservations" title="Reservations" description="View and manage tool reservations and waitlists." icon="📅" />
-        <ModuleCard href="/portal/loans" title="Loans" description="Track active loans and process returns." icon="📦" />
-        <ModuleCard href="/portal/inventory" title="Inventory" description="Monitor tool conditions and maintenance." icon="📋" />
-        <ModuleCard href="/soup-kitchen" title="Soup Kitchen" description="Organize community meals and track donations." icon="🍲" />
-        <ModuleCard href="/communities" title="Communities" description="Discover and manage neighbourhood communities." icon="🌍" />
+        <ModuleCard href="/tools" title="Tool Library" description="Browse, search, and manage the tool catalog." />
+        <ModuleCard href="/portal/members" title="Members" description="Manage registrations, verification, and membership status." />
+        <ModuleCard href="/portal/reservations" title="Reservations" description="View and manage tool reservations and waitlists." />
+        <ModuleCard href="/portal/loans" title="Loans" description="Track active loans and process returns." />
+        <ModuleCard href="/portal/inventory" title="Inventory" description="Monitor tool conditions and maintenance." />
+        <ModuleCard href="/soup-kitchen" title="Soup Kitchen" description="Organize community meals and track donations." />
+        <ModuleCard href="/communities" title="Communities" description="Discover and manage neighbourhood communities." />
       </div>
     </div>
   );
@@ -90,15 +90,5 @@ function StatCard({ label, value }: { label: string; value: number }) {
       <p className="text-2xl font-bold text-ui-50">{value}</p>
       <p className="text-sm text-ui-400">{label}</p>
     </div>
-  );
-}
-
-function ModuleCard({ href, title, description, icon }: { href: string; title: string; description: string; icon: string }) {
-  return (
-    <Link href={href} className="rounded-lg border border-ui-700 bg-ui-900 p-5 shadow-sm shadow-black/20 transition hover:shadow-md hover:shadow-black/30 hover:border-ui-500">
-      <span className="text-2xl">{icon}</span>
-      <h3 className="mt-2 font-semibold text-ui-50">{title}</h3>
-      <p className="mt-1 text-sm text-ui-200">{description}</p>
-    </Link>
   );
 }
